@@ -10,11 +10,11 @@ public class ElevatorConstants {
     public static final double elevatorIZone = 0;//TODO: config
 
 //    elevator floors
-    public static final int base = 0;//TODO: config
-    public static final int level1 = 0;//TODO: config
-    public static final int level2 = 0;//TODO: config
-    public static final int level3 = 0;//TODO: config
-    public static final int level4 = 0;//TODO: config
+    public static final int basePos = 0;//TODO: config
+    public static final int level1Pos = 0;//TODO: config
+    public static final int level2Pos = 0;//TODO: config
+    public static final int level3Pos = 0;//TODO: config
+    public static final int level4Pos = 0;//TODO: config
 
 
 

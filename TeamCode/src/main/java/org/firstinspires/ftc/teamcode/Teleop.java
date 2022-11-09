@@ -10,7 +10,9 @@ import org.firstinspires.ftc.teamcode.subsystems.elevator.ElevatorState;
 
 @TeleOp(name = "TeleOp")
 public class Teleop extends OpMode {
-    ElevatorState elevatorState = ElevatorState.BASE;
+
+    private static RobotState state = RobotState.TRAVEL;
+    private static ElevatorState elevatorState = ElevatorState.BASE;
 
 
 
@@ -24,6 +26,21 @@ public class Teleop extends OpMode {
     public void loop() {
 
         Elevator.operate(elevatorState);
+
+    }
+
+    private static void subSystemManager(){
+        switch (state){
+
+            case TRAVEL:
+                break;
+            case INTAKE:
+                elevatorState = ElevatorState.BASE;
+                break;
+            case DROP:
+                break;
+        }
+
 
     }
 
