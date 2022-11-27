@@ -9,11 +9,10 @@ import org.firstinspires.ftc.teamcode.subsystems.elevator.ElevatorState;
 
 
 @TeleOp(name = "TeleOp")
-public class Teleop extends OpMode {
+public class Teleop extends OpMode{
 
     private static RobotState state = RobotState.TRAVEL;
     private static ElevatorState elevatorState = ElevatorState.BASE;
-
 
 
     @Override
