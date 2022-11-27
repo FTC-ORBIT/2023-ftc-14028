@@ -1,10 +1,9 @@
 package org.firstinspires.ftc.teamcode.subsystems.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.PID;
-import org.firstinspires.ftc.teamcode.subsystems.elevator.ElevatorConstants;
 
 public class DriveTrain {
 
@@ -13,24 +12,22 @@ public class DriveTrain {
     private static DcMotor lb;
     private static DcMotor rb;
 
-    private static double LfPower;
-    private static double RfPower;
-    private static double LbPower;
-    private static double RbPower;
-
-    static DcMotor motor;
-
     public static void init(HardwareMap hardwareMap) {
+        lf = hardwareMap.get(DcMotor.class, "lf");
+        rf = hardwareMap.get(DcMotor.class, "rf");
+        lb = hardwareMap.get(DcMotor.class, "lb");
+        rb = hardwareMap.get(DcMotor.class, "rb");
 
-
-            motor = hardwareMap.get(DcMotor.class, "0");
-            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            int x;
+        lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public static void operate() {
-
+    public static void operate(Gamepad gamepad) {
+        lf.setPower(gamepad.left_stick_y + gamepad.left_stick_x - gamepad.left_trigger + gamepad.right_trigger);
+        rf.setPower(gamepad.left_stick_y - gamepad.left_stick_x + gamepad.left_trigger - gamepad.right_trigger);
+        lb.setPower(gamepad.left_stick_y - gamepad.left_stick_x - gamepad.left_trigger - gamepad.right_trigger);
+        rb.setPower(gamepad.left_stick_y + gamepad.left_stick_x + gamepad.left_trigger - gamepad.right_trigger);
     }
-
-
 }

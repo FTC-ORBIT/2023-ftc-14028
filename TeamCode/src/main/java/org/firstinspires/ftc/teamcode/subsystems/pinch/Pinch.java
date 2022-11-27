@@ -10,58 +10,29 @@ import org.firstinspires.ftc.teamcode.RobotState;
 
 public class Pinch {
 
-    static Servo servo0;
-    static Servo servo1;
+    private static Servo servo0;
+    private static Servo servo1;
 
 
     public static void init(HardwareMap hardwareMap) {
         servo0 = hardwareMap.get(Servo.class, "0");
+        servo1 = hardwareMap.get(Servo.class, "1");
     }
 
 
     public static void operate(pinchState state) {
         switch (state) {
-
             case OPEN:
-                servo0.setPosition( PinchConstants.openPos1);
+                servo0.setPosition( PinchConstants.servo1OpenPos);
+                servo1.setPosition(PinchConstants.servo1OpenPos);
                 break;
             case CLOSE:
-                servo0.setPosition( PinchConstants.closePos1);
-                break;
-        }
-
-    }
-
-    public static void operate2(pinchState state) {
-        switch (state) {
-
-            case OPEN:
-                servo1.setPosition(PinchConstants.openPos2);
-                break;
-            default:
-
-            case CLOSE:
-                    servo1.setPosition(PinchConstants.closePos2);
+                servo0.setPosition( PinchConstants.servo0ClosePos);
+                servo1.setPosition( PinchConstants.servo1ClosePos);
 
                 break;
         }
 
-
-    }
-    public static void operateRobotState(RobotState state) {
-        switch (state) {
-            case TRAVEL:
-                servo0.setPosition( PinchConstants.closePos1);
-                servo1.setPosition(PinchConstants.closePos2);
-                break;
-            case INTAKE:
-                servo0.setPosition( PinchConstants.openPos1);
-                servo1.setPosition(PinchConstants.openPos2);
-                break;
-            case  DROP:
-                servo0.setPosition( PinchConstants.openPos1);
-                servo1.setPosition(PinchConstants.openPos2);
-        }
     }
 
 }

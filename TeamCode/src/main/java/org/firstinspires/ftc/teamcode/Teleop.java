@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.subsystems.drivetrain.DriveTrain;
 import org.firstinspires.ftc.teamcode.subsystems.elevator.Elevator;
 import org.firstinspires.ftc.teamcode.subsystems.elevator.ElevatorState;
 
@@ -23,6 +24,7 @@ public class Teleop extends OpMode{
 
     @Override
     public void loop() {
+        DriveTrain.operate(this.gamepad1);
 
         Elevator.operate(elevatorState);
 
