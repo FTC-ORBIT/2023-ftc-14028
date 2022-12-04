@@ -1,12 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems.pinch;
 
-import android.widget.Switch;
-
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.teamcode.RobotState;
 
 public class Pinch {
 
@@ -20,7 +15,7 @@ public class Pinch {
     }
 
 
-    public static void operate(pinchState state) {
+    public static void operate(PinchState state) {
         switch (state) {
             case OPEN:
                 servo0.setPosition( PinchConstants.servo1OpenPos);

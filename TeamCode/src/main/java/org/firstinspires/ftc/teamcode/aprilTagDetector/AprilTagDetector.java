@@ -22,6 +22,7 @@
 package org.firstinspires.ftc.teamcode.aprilTagDetector;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -33,7 +34,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @TeleOp
-public class AprilTagDetector {
+public class AprilTagDetector extends OpMode {
 
 
     OpenCvCamera camera;
@@ -53,9 +54,9 @@ public class AprilTagDetector {
     // UNITS ARE METERS
     double tagsize = 0.166;
 
-    int leftTagNum = 15;
-    int middleTagNum = 16;
-    int rightTagNum = 17;
+    int leftTagNum = 0;
+    int middleTagNum = 1;
+    int rightTagNum = 2;
 
     private static ParkingSpot parkingSpot = ParkingSpot.LEFT;
 
@@ -191,5 +192,15 @@ public class AprilTagDetector {
         opMode.telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
         opMode.telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
         opMode.telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
+    }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void loop() {
+
     }
 }

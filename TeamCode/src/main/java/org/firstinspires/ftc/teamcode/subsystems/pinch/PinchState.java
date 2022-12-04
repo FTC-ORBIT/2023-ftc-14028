@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems.pinch;
 
-public enum pinchState {
+public enum PinchState {
     OPEN,CLOSE,
 
 }
