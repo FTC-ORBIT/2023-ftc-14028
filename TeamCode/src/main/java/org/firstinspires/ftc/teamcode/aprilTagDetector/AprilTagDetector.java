@@ -33,12 +33,12 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@TeleOp
-public class AprilTagDetector extends OpMode {
+
+public class AprilTagDetector {
 
 
-    OpenCvCamera camera;
-    AprilTagDetectionPipeline aprilTagDetectionPipeline;
+    static OpenCvCamera camera;
+    static AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
     static final double FEET_PER_METER = 3.28084;
 
@@ -46,23 +46,23 @@ public class AprilTagDetector extends OpMode {
     // UNITS ARE PIXELS
     // NOTE: this calibration is for the C920 webcam at 800x448.
     // You will need to do your own calibration for other configurations!
-    double fx = 578.272;
-    double fy = 578.272;
-    double cx = 402.145;
-    double cy = 221.506;
+    static double fx = 578.272;
+    static double fy = 578.272;
+    static double cx = 402.145;
+    static double cy = 221.506;
 
     // UNITS ARE METERS
-    double tagsize = 0.166;
+    static double tagsize = 0.166;
 
-    int leftTagNum = 0;
-    int middleTagNum = 1;
-    int rightTagNum = 2;
+    static int leftTagNum = 0;
+    static int middleTagNum = 1;
+    static int rightTagNum = 2;
 
     private static ParkingSpot parkingSpot = ParkingSpot.LEFT;
 
-    AprilTagDetection tagOfInterest = null;
+    static AprilTagDetection tagOfInterest = null;
 
-    public void runAprilTagDetection(LinearOpMode opMode) {
+    public static ParkingSpot runAprilTagDetection(LinearOpMode opMode) {
         int cameraMonitorViewId = opMode.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", opMode.hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(opMode.hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
@@ -166,41 +166,30 @@ public class AprilTagDetector extends OpMode {
             opMode.telemetry.update();
         }
 
-        if(tagOfInterest == null || tagOfInterest.id == leftTagNum) {
-            parkingSpot = ParkingSpot.LEFT;
+        if(tagOfInterest.id == leftTagNum) {
+            return ParkingSpot.LEFT;
         }else if (tagOfInterest.id == middleTagNum){
-            parkingSpot = ParkingSpot.MIDDLE;
+            return ParkingSpot.MIDDLE;
         }else if (tagOfInterest.id == rightTagNum){
-            parkingSpot = ParkingSpot.RIGHT;
+            return ParkingSpot.RIGHT;
         }
+        return ParkingSpot.LEFT;
 
 
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
     }
 
-    public static ParkingSpot parkingSpot(){
-        return parkingSpot;
-    }
 
-    void tagToTelemetry(AprilTagDetection detection , LinearOpMode opMode)
+    static void tagToTelemetry(AprilTagDetection detection , LinearOpMode opMode)
     {
         opMode.telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
-        opMode.telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
-        opMode.telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
-        opMode.telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
-        opMode.telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
-        opMode.telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
-        opMode.telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
+//        opMode.telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
+//        opMode.telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
+//        opMode.telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
+//        opMode.telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
+//        opMode.telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
+//        opMode.telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
     }
 
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    public void loop() {
-
-    }
 }
