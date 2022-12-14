@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems.drivetrain;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -25,17 +26,28 @@ public class DriveTrain {
         rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        lf.setDirection(DcMotorSimple.Direction.REVERSE);
+        lb.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public static void operate(Gamepad gamepad) {
-       final Vector finalVector = vectorRotation(gamepad.left_stick_x, gamepad.left_stick_y, 360 - OrbitGyro.getAngle());
+        final Vector finalVector = vectorRotation(gamepad.left_stick_x, gamepad.left_stick_y, OrbitGyro.getAngle());
+
+
+        lf.setPower(-finalVector.y + finalVector.x - gamepad.left_trigger + gamepad.right_trigger);
+        rb.setPower(-finalVector.y - finalVector.x + gamepad.left_trigger - gamepad.right_trigger);
+        lb.setPower(-finalVector.y - finalVector.x - gamepad.left_trigger + gamepad.right_trigger);
+        rf.setPower(-finalVector.y + finalVector.x + gamepad.left_trigger - gamepad.right_trigger);
+//        lf.setPower(-gamepad.left_stick_y + gamepad.left_stick_x - gamepad.left_trigger + gamepad.right_trigger);
+//        rf.setPower(-gamepad.left_stick_y - gamepad.left_stick_x + gamepad.left_trigger - gamepad.right_trigger);
+//        lb.setPower(-gamepad.left_stick_y - gamepad.left_stick_x - gamepad.left_trigger + gamepad.right_trigger);
+//        rb.setPower(-gamepad.left_stick_y + gamepad.left_stick_x + gamepad.left_trigger - gamepad.right_trigger);
 
 
 
-        lf.setPower(finalVector.y + finalVector.x - gamepad.left_trigger + gamepad.right_trigger);
-        rf.setPower(finalVector.y - finalVector.x + gamepad.left_trigger - gamepad.right_trigger);
-        lb.setPower(finalVector.y  - finalVector.x - gamepad.left_trigger - gamepad.right_trigger);
-        rb.setPower(finalVector.y  + finalVector.x + gamepad.left_trigger - gamepad.right_trigger);
+
+
     }
 
 
@@ -44,6 +56,11 @@ public class DriveTrain {
                 x * Math.sin(Math.toRadians(angle)) + y * Math.cos(Math.toRadians(angle)));
     }
 
+    private  static void turnRobot(double wanted){
+        while (Math.abs(OrbitGyro.getAngle()) < wanted){
 
+        }
+
+    }
 
 }

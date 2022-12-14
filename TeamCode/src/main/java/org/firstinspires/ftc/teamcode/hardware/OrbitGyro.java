@@ -35,7 +35,7 @@ public class OrbitGyro {
     public static double getAngle() {
 //        telemetry.addData("angle", imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle - lastAngle );
         final double gyroAngle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle - lastAngle;
-        return Math.toDegrees((Math.toRadians(gyroAngle) % (2 * Math.PI) + ( 2 * Math.PI)) % ( 2 * Math.PI));
+        return (gyroAngle % 360 + 360) % 360;
     }
 
     public static double getDAngle (){
