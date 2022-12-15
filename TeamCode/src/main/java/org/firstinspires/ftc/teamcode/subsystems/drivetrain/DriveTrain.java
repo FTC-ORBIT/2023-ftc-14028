@@ -36,9 +36,9 @@ public class DriveTrain {
 
 
         lf.setPower(-finalVector.y + finalVector.x - gamepad.left_trigger + gamepad.right_trigger);
-        rb.setPower(-finalVector.y - finalVector.x + gamepad.left_trigger - gamepad.right_trigger);
+        rf.setPower(-finalVector.y - finalVector.x + gamepad.left_trigger - gamepad.right_trigger);
         lb.setPower(-finalVector.y - finalVector.x - gamepad.left_trigger + gamepad.right_trigger);
-        rf.setPower(-finalVector.y + finalVector.x + gamepad.left_trigger - gamepad.right_trigger);
+        rb.setPower(-finalVector.y + finalVector.x + gamepad.left_trigger - gamepad.right_trigger);
 //        lf.setPower(-gamepad.left_stick_y + gamepad.left_stick_x - gamepad.left_trigger + gamepad.right_trigger);
 //        rf.setPower(-gamepad.left_stick_y - gamepad.left_stick_x + gamepad.left_trigger - gamepad.right_trigger);
 //        lb.setPower(-gamepad.left_stick_y - gamepad.left_stick_x - gamepad.left_trigger + gamepad.right_trigger);
