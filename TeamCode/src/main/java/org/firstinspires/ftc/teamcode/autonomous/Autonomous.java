@@ -1,28 +1,21 @@
-//package org.firstinspires.ftc.teamcode.autonomous;
-//
-//import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-//import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-//
-//import org.firstinspires.ftc.teamcode.aprilTagDetector.AprilTagDetector;
-//
-//
-//@TeleOp(name = "autonomous")
-//public class Autonomous extends LinearOpMode {
-//
-//
-//    private static void autonomousInit(LinearOpMode opMode) {
-//
-//    }
-//
-//    private static void run(LinearOpMode opMode) {
-//
-//    }
-//
-//
-//    @Override
-//    public void runOpMode() throws InterruptedException {
-//        autonomousInit(this);
-//        waitForStart();
-//        run(this);
-//    }
-//}
+package org.firstinspires.ftc.teamcode.autonomous;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+
+@TeleOp(name = "autonomous")
+public class Autonomous extends OpMode {
+
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void loop() {
+
+    }
+}

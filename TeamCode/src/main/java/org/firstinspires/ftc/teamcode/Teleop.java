@@ -12,7 +12,8 @@ import org.firstinspires.ftc.teamcode.subsystems.pinch.PinchState;
 
 
 @TeleOp(name = "TeleOp")
-public class Teleop extends OpMode{
+public class
+Teleop extends OpMode{
 
     private static RobotState state = RobotState.TRAVEL;
     private static ElevatorState elevatorState = ElevatorState.BASE;

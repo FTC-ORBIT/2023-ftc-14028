@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.PID;
 import org.firstinspires.ftc.teamcode.hardware.OrbitGyro;
 import org.firstinspires.ftc.teamcode.utils.Vector;
 
@@ -16,9 +17,18 @@ public class DriveTrain {
     private static DcMotor lb;
     private static DcMotor rb;
 
+    private static boolean isFinishedTurning = false;
+
+    private static PID turnRobotPID = new PID(DriveTrainConstants.turnRobotKp,
+            DriveTrainConstants.turnRobotKi,
+            DriveTrainConstants.turnRobotKd,
+            DriveTrainConstants.turnRobotKf,
+            DriveTrainConstants.turnRobotIZone);
+
+
     public static void init(HardwareMap hardwareMap) {
-        lf = hardwareMap.get(DcMotor.class, "lf");
         rf = hardwareMap.get(DcMotor.class, "rf");
+        lf = hardwareMap.get(DcMotor.class, "lf");
         lb = hardwareMap.get(DcMotor.class, "lb");
         rb = hardwareMap.get(DcMotor.class, "rb");
 
@@ -32,7 +42,7 @@ public class DriveTrain {
     }
 
     public static void operate(Gamepad gamepad) {
-        final Vector finalVector = vectorRotation(gamepad.left_stick_x, gamepad.left_stick_y, OrbitGyro.getAngle());
+        final Vector finalVector = vectorRotation(gamepad.left_stick_x, gamepad.left_stick_y, OrbitGyro.wrapAngle360(OrbitGyro.getAngle()));
 
 
         lf.setPower(-finalVector.y + finalVector.x - gamepad.left_trigger + gamepad.right_trigger);
@@ -45,22 +55,28 @@ public class DriveTrain {
 //        rb.setPower(-gamepad.left_stick_y + gamepad.left_stick_x + gamepad.left_trigger - gamepad.right_trigger);
 
 
-
-
-
     }
 
 
-    private static Vector vectorRotation(double x, double y, double angle){
+    private static Vector vectorRotation(double x, double y, double angle) {
         return new Vector(x * Math.cos(Math.toRadians(angle)) - y * Math.sin(Math.toRadians(angle)),
                 x * Math.sin(Math.toRadians(angle)) + y * Math.cos(Math.toRadians(angle)));
     }
 
-    private  static void turnRobot(double wanted){
-        while (Math.abs(OrbitGyro.getAngle()) < wanted){
+    private static void turnRobot(double wanted) {
+        turnRobotPID.setWanted(wanted);
 
-        }
+        final double angle = OrbitGyro.wrapAnglePlusMinus180(OrbitGyro.getAngle());
 
+        lf.setPower(turnRobotPID.update(angle));
+        lb.setPower(turnRobotPID.update(angle));
+        rf.setPower(-turnRobotPID.update(angle));
+        rb.setPower(-turnRobotPID.update(angle));
+
+        isFinishedTurning = Math.abs(angle) >= Math.abs(wanted);
     }
+    public static boolean isFinishedTurn(){
 
+        return isFinishedTurning;
+    }
 }

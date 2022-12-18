@@ -15,32 +15,48 @@ public class OrbitGyro {
     private static float heading = 0;
     private static float omega = 0;
     public static BNO055IMU imu;
-    private static double  lastAngle = 0;
+    private static double lastAngle = 0;
     static double currentAngle = 0;
 
-    public static void init(HardwareMap hardwareMap){
+    public static void init(HardwareMap hardwareMap) {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
-        parameters.loggingEnabled      = true;
-        parameters.loggingTag          = "IMU";
+        parameters.loggingEnabled = true;
+        parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
     }
-    public static void resetGyro (){
+
+    public static void resetGyro() {
         lastAngle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
     }
+
     public static double getAngle() {
 //        telemetry.addData("angle", imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle - lastAngle );
-        final double gyroAngle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle - lastAngle;
-        return (gyroAngle % 360 + 360) % 360;
+        return imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle - lastAngle;
     }
 
-    public static double getDAngle (){
-        double lastAngleT = currentAngle;
-        currentAngle = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle - lastAngle;
-        return currentAngle - lastAngleT;
+
+    public static double wrapAngle360(final double angle) {
+        return (angle % 360 + 360) % 360;
+
+    }
+
+    public static double wrapAnglePlusMinus180(final double angle) {
+        final double warpped = angle % 360;
+
+
+        if (warpped > 180) {
+            return warpped - 360;
+
+
+        } else if (warpped < -180) {
+            return warpped + 360;
+        } else {
+            return warpped;
+        }
     }
 }
