@@ -2,20 +2,33 @@ package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.teamcode.aprilTagDetector.AprilTagDetector;
 
 
-@TeleOp(name = "autonomous")
-public class Autonomous extends OpMode {
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "autonomous")
+public class Autonomous extends LinearOpMode {
 
 
-    @Override
-    public void init() {
+    public static void autonomousInit(LinearOpMode opMode) {
+        while (opMode.opModeInInit()) {
+            AprilTagDetector.runAprilTagDetection(opMode);
+        }
+    }
+
+    public static void autonomousLoop(LinearOpMode opMode) {
+        while (opMode.opModeIsActive()){
+            opMode.telemetry.addData("parking spot", AprilTagDetector.wantedParkingSpot());
+            opMode.telemetry.update();
+        }
 
     }
 
-    @Override
-    public void loop() {
 
+    @Override
+    public void runOpMode() throws InterruptedException {
+        autonomousInit(this);
+        waitForStart();
+        autonomousLoop(this);
     }
 }
