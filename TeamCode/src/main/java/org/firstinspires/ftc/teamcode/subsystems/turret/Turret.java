@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.hardware.OrbitGyro;
+
 public class Turret {
     private static DcMotor motor;
 
@@ -15,7 +17,13 @@ public class Turret {
 
         motor.setPower(gamepad.right_stick_x);
 
-    }
 
+
+
+    }
+public static void getAngle(){
+        motor.setPower(OrbitGyro.getAngle());
+
+}
 
 }

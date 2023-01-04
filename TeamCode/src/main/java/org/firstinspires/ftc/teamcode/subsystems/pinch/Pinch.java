@@ -14,6 +14,7 @@ public class Pinch {
         servo0 = hardwareMap.get(Servo.class, "0");
         servo1 = hardwareMap.get(Servo.class, "1");
     }
+    private static boolean isPinchState = false;
 
 
     public static void operate(PinchState state) {
@@ -36,8 +37,10 @@ public static void closePinch(){
     servo0.setPosition( PinchConstants.servo0ClosePos);
     servo1.setPosition( PinchConstants.servo1ClosePos);
 
+
+
 }
 public static boolean isFinishedMoving(){
-        return false;
+        return isPinchState;
 }
 }
