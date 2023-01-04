@@ -39,7 +39,10 @@ public class Elevator {
 
     }
 
-    private static void setFloor(int floor){
+
+    private static boolean isFinishedFloor = false;
+
+    public static void setFloor(int floor){
 //      getting wanted by floor
         int wanted;
         switch (floor) {
@@ -63,5 +66,15 @@ public class Elevator {
         }
         elevatorPID.setWanted(wanted);
         motor.setPower(elevatorPID.update(motor.getCurrentPosition()));
+
+        isFinishedFloor = Math.abs(motor.getCurrentPosition()) > Math.abs(wanted);
     }
+
+    public static boolean isIsFinishedElevating(){
+        return isFinishedFloor;
+
+
+
+    }
+
 }

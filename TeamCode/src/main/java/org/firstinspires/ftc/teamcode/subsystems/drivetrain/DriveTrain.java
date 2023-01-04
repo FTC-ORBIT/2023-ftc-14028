@@ -63,7 +63,7 @@ public class DriveTrain {
                 x * Math.sin(Math.toRadians(angle)) + y * Math.cos(Math.toRadians(angle)));
     }
 
-    private static void turnRobot(double wanted) {
+    public static void turnRobot(double wanted) {
         turnRobotPID.setWanted(wanted);
 
         final double angle = OrbitGyro.wrapAnglePlusMinus180(OrbitGyro.getAngle());
@@ -76,7 +76,6 @@ public class DriveTrain {
         isFinishedTurning = Math.abs(angle) >= Math.abs(wanted);
     }
     public static boolean isFinishedTurn(){
-
         return isFinishedTurning;
     }
 }
