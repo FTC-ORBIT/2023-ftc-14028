@@ -4,26 +4,38 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.hardware.OrbitGyro;
+import org.firstinspires.ftc.teamcode.PID;
+import org.firstinspires.ftc.teamcode.subsystems.elevator.ElavatorConstants;
 
 public class Turret {
     private static DcMotor motor;
+
+    private static final PID turretPID = new PID(TurretConstants.turretKp, TurretConstants.turretKi, TurretConstants.turretKd, TurretConstants.turretKf, TurretConstants.turretIzone);
+
 
     public static void init(HardwareMap hardwareMap) {
         motor = hardwareMap.get(DcMotor.class, "turret");
     }
 
     public static void operate(Gamepad gamepad) {
-
         motor.setPower(gamepad.right_stick_x);
-
-
-
-
     }
-public static void getAngle(){
-        motor.setPower(OrbitGyro.getAngle());
 
-}
+    public static double getAngle() {
+        return motor.getCurrentPosition() * org.firstinspires.ftc.teamcode.subsystems.turret.TurretConstants.ticksToAngle;
+    }
+    public static boolean isFinishedMoving = false;
 
+    public static void setAngle(double wantedAngle) {
+
+
+        turretPID.setWanted(wantedAngle);
+        motor.setPower(turretPID.update(getAngle()));
+
+isFinishedMove =
+    }
+
+    public static boolean isFinishedMoving() {
+        return isFinishedMove;
+    }
 }

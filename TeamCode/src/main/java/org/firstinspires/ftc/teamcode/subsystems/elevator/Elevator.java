@@ -1,16 +1,13 @@
 package org.firstinspires.ftc.teamcode.subsystems.elevator;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.PID;
 
-import java.util.WeakHashMap;
-
 public class Elevator {
 
     static DcMotor motor;
-    private static final PID elevatorPID = new PID(ElevatorConstants.elevatorKp, ElevatorConstants.elevatorKi, ElevatorConstants.elevatorKd, ElevatorConstants.elevatorKf, ElevatorConstants.elevatorIZone);
+    private static final PID elevatorPID = new PID(ElavatorConstants.elevatorKp, ElavatorConstants.elevatorKi, ElavatorConstants.elevatorKd, ElavatorConstants.elevatorKf, ElavatorConstants.elevatorIZone);
 
     public static void init(HardwareMap hardwareMap){
         motor = hardwareMap.get(DcMotor.class,"0");
@@ -47,21 +44,21 @@ public class Elevator {
         int wanted;
         switch (floor) {
             case 0:
-                wanted = ElevatorConstants.basePos;
+                wanted = ElavatorConstants.basePos;
                 break;
             case 1:
-                wanted = ElevatorConstants.level1Pos;
+                wanted = ElavatorConstants.level1Pos;
                 break;
             case 2:
-                wanted = ElevatorConstants.level2Pos;
+                wanted = ElavatorConstants.level2Pos;
                 break;
             case 3:
-                wanted =ElevatorConstants.level3Pos;
+                wanted = ElavatorConstants.level3Pos;
             case 4:
-                wanted = ElevatorConstants.level4Pos;
+                wanted = ElavatorConstants.level4Pos;
                 break;
             default:
-                wanted = ElevatorConstants.basePos;
+                wanted = ElavatorConstants.basePos;
                 break;
         }
         elevatorPID.setWanted(wanted);

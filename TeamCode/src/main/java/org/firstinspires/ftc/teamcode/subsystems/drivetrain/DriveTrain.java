@@ -76,6 +76,7 @@ public class DriveTrain {
         isFinishedTurning = Math.abs(angle) >= Math.abs(wanted);
     }
     public static boolean isFinishedTurn(){
+
         return isFinishedTurning;
     }
 }

@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems.elevator;
 
-public class ElevatorConstants {
+public class ElavatorConstants {
 
 //    PID
     public static final double elevatorKp = 0;//TODO: config
