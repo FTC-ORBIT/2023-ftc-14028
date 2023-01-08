@@ -32,10 +32,10 @@ public class Turret {
         turretPID.setWanted(wantedAngle);
         motor.setPower(turretPID.update(getAngle()));
 
-isFinishedMove =
+isFinishedMoving = Math.abs(motor.getCurrentPosition()) > Math.abs(wantedAngle);
     }
 
     public static boolean isFinishedMoving() {
-        return isFinishedMove;
+        return isFinishedMoving;
     }
 }

@@ -15,6 +15,7 @@ public class Pinch {
         servo0 = hardwareMap.get(Servo.class, "0");
         servo1 = hardwareMap.get(Servo.class, "1");
     }
+
     public static boolean isFinishedMoving = false;
 
     public static void operate(PinchState state) {
@@ -39,8 +40,14 @@ public class Pinch {
         servo0.setPosition(PinchConstants.servo0ClosePos);
         servo1.setPosition(PinchConstants.servo1ClosePos);
 
-isFinishedMoving = Turret.operate();
+
+
+ isFinishedMoving = ;
     }
-    public static boolean isFinishedMoving(){
+
+
+    public static boolean isFinishedMoving() {
+
         return isFinishedMoving;
+    }
 }
