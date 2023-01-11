@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.subsystems.turret.Turret;
 
 public class Pinch {
-
+    //private Enum pinchState = isFinishedMoving ? PinchState.CLOSE : PinchState.OPEN;
     private static Servo servo0;
     private static Servo servo1;
 
@@ -16,20 +16,20 @@ public class Pinch {
         servo1 = hardwareMap.get(Servo.class, "1");
     }
 
-    public static boolean isFinishedMoving = false;
 
     public static void operate(PinchState state) {
         switch (state) {
             case OPEN:
                 openPinch();
+
                 break;
             case CLOSE:
                 closePinch();
 
                 break;
         }
-    }
 
+    }
     public static void openPinch() {
         servo0.setPosition(PinchConstants.servo0OpenPos);
         servo1.setPosition(PinchConstants.servo1OpenPos);
@@ -40,14 +40,5 @@ public class Pinch {
         servo0.setPosition(PinchConstants.servo0ClosePos);
         servo1.setPosition(PinchConstants.servo1ClosePos);
 
-
-
- isFinishedMoving = ;
-    }
-
-
-    public static boolean isFinishedMoving() {
-
-        return isFinishedMoving;
     }
 }

@@ -11,10 +11,10 @@ import org.firstinspires.ftc.teamcode.subsystems.pinch.PinchState;
 
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "autonomous")
-public class Autonomous extends LinearOpMode {
+public class RightBlue extends LinearOpMode {
     private static int actionNum = 1;
 
-    public static void autonomousInit(LinearOpMode opMode) {
+    public static void rightBlueInit(LinearOpMode opMode) {
         DriveTrain.init(opMode.hardwareMap);
 
 
@@ -40,7 +40,6 @@ public class Autonomous extends LinearOpMode {
 
 
 
-
             switch (AprilTagDetector.wantedParkingSpot()){
                 case LEFT:
                     break;
@@ -55,7 +54,7 @@ public class Autonomous extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        autonomousInit(this);
+        rightBlueInit(this);
         waitForStart();
         autonomousLoop(this);
     }
