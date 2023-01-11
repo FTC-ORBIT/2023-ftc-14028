@@ -49,10 +49,10 @@ public class DriveTrain {
         rf.setPower(-finalVector.y - finalVector.x + gamepad.left_trigger - gamepad.right_trigger);
         lb.setPower(-finalVector.y - finalVector.x - gamepad.left_trigger + gamepad.right_trigger);
         rb.setPower(-finalVector.y + finalVector.x + gamepad.left_trigger - gamepad.right_trigger);
-//        lf.setPower(-gamepad.left_stick_y + gamepad.left_stick_x - gamepad.left_trigger + gamepad.right_trigger);
-//        rf.setPower(-gamepad.left_stick_y - gamepad.left_stick_x + gamepad.left_trigger - gamepad.right_trigger);
-//        lb.setPower(-gamepad.left_stick_y - gamepad.left_stick_x - gamepad.left_trigger + gamepad.right_trigger);
-//        rb.setPower(-gamepad.left_stick_y + gamepad.left_stick_x + gamepad.left_trigger - gamepad.right_trigger);
+        lf.setPower(-gamepad.left_stick_y + gamepad.left_stick_x - gamepad.left_trigger + gamepad.right_trigger);
+        rf.setPower(-gamepad.left_stick_y - gamepad.left_stick_x + gamepad.left_trigger - gamepad.right_trigger);
+        lb.setPower(-gamepad.left_stick_y - gamepad.left_stick_x - gamepad.left_trigger + gamepad.right_trigger);
+        rb.setPower(-gamepad.left_stick_y + gamepad.left_stick_x + gamepad.left_trigger - gamepad.right_trigger);
 
 
     }
@@ -75,8 +75,27 @@ public class DriveTrain {
 
         isFinishedTurning = Math.abs(angle) >= Math.abs(wanted);
     }
-    public static boolean isFinishedTurn(){
+
+    public static boolean isFinishedTurn() {
 
         return isFinishedTurning;
     }
+
+    public static void drive(Vector drive, double r) {
+        final double lfPower = drive.y + drive.x + r;
+        final double rfPower = drive.y - drive.x - r;
+        final double lbPower = drive.y - drive.x + r;
+        final double rbPower = drive.y + drive.x - r;
+        double highestPower = 1;
+        final double max = Math.max(Math.abs(lfPower),
+                Math.max(Math.abs(lbPower), Math.max(Math.abs(rfPower), Math.abs(rbPower))));
+        if (max > 1)
+            highestPower = max;
+        lf.setPower(DriveTrainConstants.turnRobotIZone * (lfPower / highestPower));
+        rf.setPower(DriveTrainConstants.turnRobotIZone * (rfPower / highestPower));
+        lb.setPower(DriveTrainConstants.turnRobotIZone * (lbPower / highestPower));
+        rb.setPower(DriveTrainConstants.turnRobotIZone * (rbPower / highestPower));
+    }
+
+
 }
