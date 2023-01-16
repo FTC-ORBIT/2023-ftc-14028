@@ -7,8 +7,11 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.hardware.OrbitGyro;
 import org.firstinspires.ftc.teamcode.subsystems.drivetrain.DriveTrain;
+import org.firstinspires.ftc.teamcode.subsystems.elevator.Elevator;
 import org.firstinspires.ftc.teamcode.subsystems.elevator.ElevatorState;
+import org.firstinspires.ftc.teamcode.subsystems.pinch.Pinch;
 import org.firstinspires.ftc.teamcode.subsystems.pinch.PinchState;
+import org.firstinspires.ftc.teamcode.subsystems.turret.Turret;
 
 
 @TeleOp(name = "TeleOp")
@@ -24,9 +27,9 @@ Teleop extends OpMode{
     public void init() {
         OrbitGyro.init(hardwareMap);
         DriveTrain.init(hardwareMap);
-//        Elevator.init(hardwareMap);
-//        Turret.init(hardwareMap);
-//        Pinch.init(hardwareMap);
+        Elevator.init(hardwareMap);
+        Turret.init(hardwareMap);
+        Pinch.init(hardwareMap);
     }
 
     @Override
@@ -34,9 +37,11 @@ Teleop extends OpMode{
         subSystemManager(gamepad1, gamepad2);
 
         DriveTrain.operate(gamepad1);
-//        Elevator.operate(elevatorState);
-//        Turret.operate(gamepad2);
-//        Pinch.operate(pinchState);
+        Elevator.operate(elevatorState);
+      Turret.operate(gamepad2);
+       Pinch.operate(pinchState);
+
+       telemetry.addData("position", Elevator.getMotorPos());
     }
 
     private static void subSystemManager(Gamepad gamepad1, Gamepad gamepad2){

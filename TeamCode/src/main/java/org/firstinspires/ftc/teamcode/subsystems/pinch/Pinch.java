@@ -12,8 +12,8 @@ public class Pinch {
 
 
     public static void init(HardwareMap hardwareMap) {
-        servo0 = hardwareMap.get(Servo.class, "0");
-        servo1 = hardwareMap.get(Servo.class, "1");
+        servo0 = hardwareMap.get(Servo.class, "servo0");
+        servo1 = hardwareMap.get(Servo.class, "servo1");
     }
 
 

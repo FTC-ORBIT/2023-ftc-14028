@@ -10,7 +10,7 @@ public class Elevator {
     private static final PID elevatorPID = new PID(ElavatorConstants.elevatorKp, ElavatorConstants.elevatorKi, ElavatorConstants.elevatorKd, ElavatorConstants.elevatorKf, ElavatorConstants.elevatorIZone);
 
     public static void init(HardwareMap hardwareMap){
-        motor = hardwareMap.get(DcMotor.class,"0");
+        motor = hardwareMap.get(DcMotor.class,"elevator");
         motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
@@ -33,6 +33,7 @@ public class Elevator {
                 setFloor(4);
                 break;
         }
+
 
     }
 
@@ -69,9 +70,10 @@ public class Elevator {
 
     public static boolean isIsFinishedElevating(){
         return isFinishedFloor;
+    }
 
-
-
+    public static double getMotorPos(){
+        return motor.getCurrentPosition();
     }
 
 }
