@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.PID;
-import org.firstinspires.ftc.teamcode.subsystems.elevator.ElavatorConstants;
 
 public class Turret {
     private static DcMotor motor;
@@ -18,7 +17,7 @@ public class Turret {
     }
 
     public static void operate(Gamepad gamepad) {
-        motor.setPower(gamepad.right_stick_x);
+        motor.setPower(-gamepad.right_stick_x);
     }
 
     public static double getAngle() {
@@ -37,5 +36,11 @@ isFinishedMoving = Math.abs(motor.getCurrentPosition()) > Math.abs(wantedAngle);
 
     public static boolean isFinishedMoving() {
         return isFinishedMoving;
+    }
+
+    public static void resetEncoder(){
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
     }
 }

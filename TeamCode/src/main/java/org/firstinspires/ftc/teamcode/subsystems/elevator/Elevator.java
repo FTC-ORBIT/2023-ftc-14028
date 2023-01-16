@@ -7,12 +7,12 @@ import org.firstinspires.ftc.teamcode.PID;
 public class Elevator {
 
     static DcMotor motor;
-    private static final PID elevatorPID = new PID(ElavatorConstants.elevatorKp, ElavatorConstants.elevatorKi, ElavatorConstants.elevatorKd, ElavatorConstants.elevatorKf, ElavatorConstants.elevatorIZone);
+    private static final PID elevatorPID = new PID(ElevatorConstants.elevatorKp, ElevatorConstants.elevatorKi, ElevatorConstants.elevatorKd, ElevatorConstants.elevatorKf, ElevatorConstants.elevatorIZone);
 
     public static void init(HardwareMap hardwareMap){
         motor = hardwareMap.get(DcMotor.class,"elevator");
         motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        resetEncoder();
     }
 
     public static void operate(ElevatorState state) {
@@ -45,21 +45,21 @@ public class Elevator {
         int wanted;
         switch (floor) {
             case 0:
-                wanted = ElavatorConstants.basePos;
+                wanted = ElevatorConstants.basePos;
                 break;
             case 1:
-                wanted = ElavatorConstants.level1Pos;
+                wanted = ElevatorConstants.level1Pos;
                 break;
             case 2:
-                wanted = ElavatorConstants.level2Pos;
+                wanted = ElevatorConstants.level2Pos;
                 break;
             case 3:
-                wanted = ElavatorConstants.level3Pos;
+                wanted = ElevatorConstants.level3Pos;
             case 4:
-                wanted = ElavatorConstants.level4Pos;
+                wanted = ElevatorConstants.level4Pos;
                 break;
             default:
-                wanted = ElavatorConstants.basePos;
+                wanted = ElevatorConstants.basePos;
                 break;
         }
         elevatorPID.setWanted(wanted);
@@ -74,6 +74,12 @@ public class Elevator {
 
     public static double getMotorPos(){
         return motor.getCurrentPosition();
+    }
+
+    public static void resetEncoder(){
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
     }
 
 }

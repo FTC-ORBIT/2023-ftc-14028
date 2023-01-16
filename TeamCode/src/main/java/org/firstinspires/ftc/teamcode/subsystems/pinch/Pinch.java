@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems.pinch;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -32,7 +33,7 @@ public class Pinch {
     }
     public static void openPinch() {
         servo0.setPosition(PinchConstants.servo0OpenPos);
-        servo1.setPosition(PinchConstants.servo1OpenPos);
+//        servo1.setPosition(PinchConstants.servo1OpenPos);
 
     }
 
@@ -41,4 +42,5 @@ public class Pinch {
         servo1.setPosition(PinchConstants.servo1ClosePos);
 
     }
+
 }

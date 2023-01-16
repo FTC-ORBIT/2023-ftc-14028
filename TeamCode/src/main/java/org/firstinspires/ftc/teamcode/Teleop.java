@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -19,7 +20,7 @@ public class
 Teleop extends OpMode{
 
     private static RobotState state = RobotState.TRAVEL;
-    private static ElevatorState elevatorState = ElevatorState.BASE;
+    private static ElevatorState elevatorState = ElevatorState.LEVEL3;
     private static PinchState pinchState = PinchState.OPEN;
 
 
@@ -38,10 +39,15 @@ Teleop extends OpMode{
 
         DriveTrain.operate(gamepad1);
         Elevator.operate(elevatorState);
-      Turret.operate(gamepad2);
+      Turret.operate(gamepad1);
        Pinch.operate(pinchState);
 
+        telemetry.addData("position", Turret.getAngle());
        telemetry.addData("position", Elevator.getMotorPos());
+        telemetry.addData("elevator state", elevatorState);
+
+
+
     }
 
     private static void subSystemManager(Gamepad gamepad1, Gamepad gamepad2){
@@ -57,7 +63,7 @@ Teleop extends OpMode{
         switch (state){
             case TRAVEL:
                 pinchState = PinchState.CLOSE;
-                changeFloors(gamepad2);
+                changeFloors(gamepad1);
                 break;
             case INTAKE:
                 elevatorState = ElevatorState.BASE;
