@@ -63,7 +63,7 @@ Teleop extends OpMode{
         switch (state){
             case TRAVEL:
                 pinchState = PinchState.CLOSE;
-                changeFloors(gamepad1);
+                changeFloors(gamepad2);
                 break;
             case INTAKE:
                 elevatorState = ElevatorState.BASE;
