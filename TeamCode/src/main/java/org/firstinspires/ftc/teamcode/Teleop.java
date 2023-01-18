@@ -20,7 +20,7 @@ public class
 Teleop extends OpMode{
 
     private static RobotState state = RobotState.TRAVEL;
-    private static ElevatorState elevatorState = ElevatorState.LEVEL3;
+    private static ElevatorState elevatorState = ElevatorState.BASE;
     private static PinchState pinchState = PinchState.OPEN;
 
 

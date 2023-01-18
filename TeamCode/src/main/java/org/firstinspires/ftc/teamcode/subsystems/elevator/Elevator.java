@@ -55,6 +55,7 @@ public class Elevator {
                 break;
             case 3:
                 wanted = ElevatorConstants.level3Pos;
+                break;
             case 4:
                 wanted = ElevatorConstants.level4Pos;
                 break;
@@ -66,6 +67,7 @@ public class Elevator {
         motor.setPower(elevatorPID.update(motor.getCurrentPosition()));
 
         isFinishedFloor = Math.abs(motor.getCurrentPosition()) > Math.abs(wanted);
+
     }
 
     public static boolean isIsFinishedElevating(){

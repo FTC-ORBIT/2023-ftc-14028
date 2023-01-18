@@ -14,15 +14,35 @@ public class Turret {
 
     public static void init(HardwareMap hardwareMap) {
         motor = hardwareMap.get(DcMotor.class, "turret");
+        resetEncoder();
     }
 
     public static void operate(Gamepad gamepad) {
-        motor.setPower(-gamepad.right_stick_x);
+
+        double gamepadChange = -gamepad.right_stick_x;
+
+        if (motor.getCurrentPosition() < 450 && gamepad.right_stick_x > 0) {
+
+            gamepadChange = 0;
+        }
+
+
+        if (motor.getCurrentPosition() > 2750 && gamepad.right_stick_x < 0) {
+
+            gamepadChange = 0;
+
+        }
+            motor.setPower(gamepadChange);
+
+
     }
 
     public static double getAngle() {
-        return motor.getCurrentPosition() * org.firstinspires.ftc.teamcode.subsystems.turret.TurretConstants.ticksToAngle;
+        return motor.getCurrentPosition();
+//                * org.firstinspires.ftc.teamcode.subsystems.turret.TurretConstants.ticksToAngle;
     }
+
+
     public static boolean isFinishedMoving = false;
 
     public static void setAngle(double wantedAngle) {

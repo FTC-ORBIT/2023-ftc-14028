@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems.pinch;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -13,8 +14,8 @@ public class Pinch {
 
 
     public static void init(HardwareMap hardwareMap) {
-        servo0 = hardwareMap.get(Servo.class, "servo0");
-        servo1 = hardwareMap.get(Servo.class, "servo1");
+        servo0 = hardwareMap.get(Servo.class, "0");
+        servo1 = hardwareMap.get(Servo.class, "1");
     }
 
 
@@ -33,7 +34,7 @@ public class Pinch {
     }
     public static void openPinch() {
         servo0.setPosition(PinchConstants.servo0OpenPos);
-//        servo1.setPosition(PinchConstants.servo1OpenPos);
+        servo1.setPosition(PinchConstants.servo1OpenPos);
 
     }
 
@@ -41,6 +42,10 @@ public class Pinch {
         servo0.setPosition(PinchConstants.servo0ClosePos);
         servo1.setPosition(PinchConstants.servo1ClosePos);
 
+    }
+    public static void testClaw (Gamepad gamepad){
+        servo0.setPosition(gamepad.right_trigger);
+        servo1.setPosition(gamepad.left_trigger);
     }
 
 }
