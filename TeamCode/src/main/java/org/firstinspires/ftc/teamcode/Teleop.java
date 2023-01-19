@@ -5,12 +5,14 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.hardware.OrbitGyro;
 import org.firstinspires.ftc.teamcode.subsystems.drivetrain.DriveTrain;
 import org.firstinspires.ftc.teamcode.subsystems.elevator.Elevator;
 import org.firstinspires.ftc.teamcode.subsystems.elevator.ElevatorState;
 import org.firstinspires.ftc.teamcode.subsystems.pinch.Pinch;
+import org.firstinspires.ftc.teamcode.subsystems.pinch.PinchConstants;
 import org.firstinspires.ftc.teamcode.subsystems.pinch.PinchState;
 import org.firstinspires.ftc.teamcode.subsystems.turret.Turret;
 
