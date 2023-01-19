@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,6 +14,7 @@ import org.firstinspires.ftc.teamcode.subsystems.pinch.Pinch;
 import org.firstinspires.ftc.teamcode.subsystems.pinch.PinchConstants;
 import org.firstinspires.ftc.teamcode.subsystems.pinch.PinchState;
 import org.firstinspires.ftc.teamcode.subsystems.turret.Turret;
+import org.firstinspires.ftc.teamcode.subsystems.turret.TurretState;
 
 
 @TeleOp(name = "TeleOp")
@@ -23,7 +23,8 @@ Teleop extends OpMode{
 
     private static RobotState state = RobotState.TRAVEL;
     private static ElevatorState elevatorState = ElevatorState.BASE;
-    private static PinchState pinchState = PinchState.OPEN;
+    private static PinchState pinchState = PinchState.CLOSE;
+private static TurretState turretState = TurretState.DEFULT;
 
 
     @Override
@@ -41,18 +42,22 @@ Teleop extends OpMode{
 
         DriveTrain.operate(gamepad1);
         Elevator.operate(elevatorState);
-      Turret.operate(gamepad1);
+      Turret.operate(gamepad2);
        Pinch.operate(pinchState);
 
         telemetry.addData("position", Turret.getAngle());
        telemetry.addData("position", Elevator.getMotorPos());
         telemetry.addData("elevator state", elevatorState);
+        telemetry.addData("pinch pos", pinchState);
 
 
 
     }
 
     private static void subSystemManager(Gamepad gamepad1, Gamepad gamepad2){
+
+        changeTurretState(gamepad2);
+
         state = gamepad1.a ? RobotState.INTAKE : state;
         state = gamepad1.b ? RobotState.TRAVEL : state;
         state = gamepad1.x ? RobotState.DROP : state;
@@ -83,5 +88,11 @@ Teleop extends OpMode{
         elevatorState = gamepad.x ? ElevatorState.LEVEL3 : elevatorState;
         elevatorState = gamepad.y ? ElevatorState.LEVEL4 : elevatorState;
     }
+    private static void changeTurretState(Gamepad gamepad){
+        turretState = gamepad.dpad_up ? TurretState.DEFULT : turretState;
+        turretState = gamepad.dpad_left ? TurretState.SIDE : turretState;
+        turretState = gamepad.dpad_down ? TurretState.BACKWARD : turretState;
 
+
+    }
 }

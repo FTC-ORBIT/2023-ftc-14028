@@ -5,17 +5,33 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.PID;
+import org.firstinspires.ftc.teamcode.subsystems.elevator.ElevatorConstants;
 
 public class Turret {
     private static DcMotor motor;
 
-    private static final PID turretPID = new PID(TurretConstants.turretKp, TurretConstants.turretKi, TurretConstants.turretKd, TurretConstants.turretKf, TurretConstants.turretIzone);
+    private static final PID turretPID = new PID(org.firstinspires.ftc.teamcode.subsystems.turret.TurretConstants.turretKp, org.firstinspires.ftc.teamcode.subsystems.turret.TurretConstants.turretKi, org.firstinspires.ftc.teamcode.subsystems.turret.TurretConstants.turretKd, org.firstinspires.ftc.teamcode.subsystems.turret.TurretConstants.turretKf, org.firstinspires.ftc.teamcode.subsystems.turret.TurretConstants.turretIzone);
 
 
     public static void init(HardwareMap hardwareMap) {
         motor = hardwareMap.get(DcMotor.class, "turret");
         resetEncoder();
     }
+public static void turretState(TurretState state){
+        switch (state){
+            case DEFULT:
+                motor.setTargetPosition(TurretConstants.turretDefult);
+                break;
+            case SIDE:
+                motor.setTargetPosition(TurretConstants.turretSide);
+                break;
+            case BACKWARD:
+                motor.setTargetPosition(TurretConstants.turretBackward);
+            break;
+        }
+}
+
+
 
     public static void operate(Gamepad gamepad) {
 
@@ -45,14 +61,33 @@ public class Turret {
 
     public static boolean isFinishedMoving = false;
 
-    public static void setAngle(double wantedAngle) {
+    public static void setTurretPos(int turretPos) {
 
+        int wanted;
+        switch (turretPos) {
+            case 0:
+                wanted = TurretConstants.turretDefult;
+                break;
+            case 1:
+                wanted = TurretConstants.turretSide;
+                break;
+            case 2:
+                wanted = TurretConstants.turretBackward;
+                break;
+
+
+        }
+
+    }
+
+    public static void setAngle(double wantedAngle){
 
         turretPID.setWanted(wantedAngle);
         motor.setPower(turretPID.update(getAngle()));
 
-isFinishedMoving = Math.abs(motor.getCurrentPosition()) > Math.abs(wantedAngle);
+        isFinishedMoving = Math.abs(motor.getCurrentPosition()) > Math.abs(wantedAngle);
     }
+
 
     public static boolean isFinishedMoving() {
         return isFinishedMoving;

@@ -23,11 +23,9 @@ public class Pinch {
         switch (state) {
             case OPEN:
                 openPinch();
-
                 break;
             case CLOSE:
                 closePinch();
-
                 break;
         }
 
@@ -43,9 +41,6 @@ public class Pinch {
         servo1.setPosition(PinchConstants.servo1ClosePos);
 
     }
-    public static void testClaw (Gamepad gamepad){
-        servo0.setPosition(gamepad.right_trigger);
-        servo1.setPosition(gamepad.left_trigger);
-    }
+
 
 }

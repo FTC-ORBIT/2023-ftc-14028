@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems.elevator;
 
-import com.acmerobotics.dashboard.config.Config;
-
 public class ElevatorConstants {
 
 //    PID
