@@ -3,6 +3,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.PID;
+import org.firstinspires.ftc.teamcode.utils.Delay;
 
 public class Elevator {
 
@@ -16,23 +17,25 @@ public class Elevator {
     }
 
     public static void operate(ElevatorState state) {
-        switch (state){
-            case BASE:
-                setFloor(0);
-                break;
-            case LEVEL1:
-                setFloor(1);
-                break;
-            case LEVEL2:
-                setFloor(2);
-                break;
-            case LEVEL3:
-                setFloor(3);
-                break;
-            case LEVEL4:
-                setFloor(4);
-                break;
-        }
+
+
+            switch (state) {
+                case BASE:
+                    setFloor(0);
+                    break;
+                case LEVEL1:
+                    setFloor(1);
+                    break;
+                case LEVEL2:
+                    setFloor(2);
+                    break;
+                case LEVEL3:
+                    setFloor(3);
+                    break;
+                case LEVEL4:
+                    setFloor(4);
+                    break;
+            }
 
 
     }

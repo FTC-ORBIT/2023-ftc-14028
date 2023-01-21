@@ -37,7 +37,7 @@ public static void turretState(TurretState state){
 
         double gamepadChange = -gamepad.right_stick_x;
 
-        if (motor.getCurrentPosition() < 450 && gamepad.right_stick_x > 0) {
+        if (motor.getCurrentPosition() < 350 && gamepad.right_stick_x > 0) {
 
             gamepadChange = 0;
         }
@@ -53,9 +53,8 @@ public static void turretState(TurretState state){
 
     }
 
-    public static double getAngle() {
+    public static double getPosition() {
         return motor.getCurrentPosition();
-//                * org.firstinspires.ftc.teamcode.subsystems.turret.TurretConstants.ticksToAngle;
     }
 
 
@@ -80,12 +79,12 @@ public static void turretState(TurretState state){
 
     }
 
-    public static void setAngle(double wantedAngle){
+    public static void setPosition(double wantedPosition){
 
-        turretPID.setWanted(wantedAngle);
-        motor.setPower(turretPID.update(getAngle()));
+        turretPID.setWanted(wantedPosition);
+        motor.setPower(turretPID.update(getPosition()));
 
-        isFinishedMoving = Math.abs(motor.getCurrentPosition()) > Math.abs(wantedAngle);
+        isFinishedMoving = Math.abs(motor.getCurrentPosition()) > Math.abs(wantedPosition);
     }
 
 

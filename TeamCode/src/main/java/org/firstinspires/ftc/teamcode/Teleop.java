@@ -16,12 +16,14 @@ import org.firstinspires.ftc.teamcode.subsystems.pinch.PinchState;
 import org.firstinspires.ftc.teamcode.subsystems.turret.Turret;
 import org.firstinspires.ftc.teamcode.subsystems.turret.TurretState;
 
+import java.util.concurrent.Delayed;
+
 
 @TeleOp(name = "TeleOp")
 public class
 Teleop extends OpMode{
 
-    private static RobotState state = RobotState.TRAVEL;
+    private static RobotState state = RobotState.INTAKE;
     private static ElevatorState elevatorState = ElevatorState.BASE;
     private static PinchState pinchState = PinchState.CLOSE;
 private static TurretState turretState = TurretState.DEFULT;
@@ -45,10 +47,11 @@ private static TurretState turretState = TurretState.DEFULT;
       Turret.operate(gamepad2);
        Pinch.operate(pinchState);
 
-        telemetry.addData("position", Turret.getAngle());
+        telemetry.addData("position", Turret.getPosition());
        telemetry.addData("position", Elevator.getMotorPos());
         telemetry.addData("elevator state", elevatorState);
         telemetry.addData("pinch pos", pinchState);
+        telemetry.addData("turret state", turretState);
 
 
 
@@ -59,25 +62,38 @@ private static TurretState turretState = TurretState.DEFULT;
         changeTurretState(gamepad2);
 
         state = gamepad1.a ? RobotState.INTAKE : state;
-        state = gamepad1.b ? RobotState.TRAVEL : state;
-        state = gamepad1.x ? RobotState.DROP : state;
+        state = gamepad1.b ? RobotState.TRAVEL1 : state;
+        state = gamepad1.x ? RobotState.TRAVEL2 : state;
         state = gamepad1.y ? RobotState.DROP : state;
+        state = gamepad1.right_bumper ? RobotState.TRAVEL3 : state;
 
 
 
 
 
         switch (state){
-            case TRAVEL:
+            case TRAVEL1:
                 pinchState = PinchState.CLOSE;
+                elevatorState = ElevatorState.LEVEL2;
+                turretState = TurretState.BACKWARD;
                 changeFloors(gamepad2);
                 break;
             case INTAKE:
-                elevatorState = ElevatorState.BASE;
+                turretState = TurretState.DEFULT;
                 pinchState = PinchState.OPEN;
+                elevatorState = ElevatorState.BASE;
                 break;
             case DROP:
                 pinchState = PinchState.OPEN;
+                break;
+            case TRAVEL2:
+                pinchState = PinchState.CLOSE;
+                elevatorState = ElevatorState.LEVEL3;
+                turretState = TurretState.BACKWARD;
+                break;
+            case TRAVEL3:
+                pinchState = PinchState.CLOSE;
+                elevatorState = ElevatorState.LEVEL1;
                 break;
         }
     }
