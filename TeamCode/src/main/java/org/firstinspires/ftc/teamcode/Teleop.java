@@ -44,7 +44,7 @@ private static TurretState turretState = TurretState.DEFULT;
 
         DriveTrain.operate(gamepad1);
         Elevator.operate(elevatorState);
-      Turret.operate(gamepad2);
+      Turret.TurretPos(turretState);
        Pinch.operate(pinchState);
 
         telemetry.addData("position", Turret.getPosition());
@@ -77,6 +77,7 @@ private static TurretState turretState = TurretState.DEFULT;
                 elevatorState = ElevatorState.LEVEL2;
                 turretState = TurretState.BACKWARD;
                 changeFloors(gamepad2);
+                changeTurretState(gamepad1);
                 break;
             case INTAKE:
                 turretState = TurretState.DEFULT;
@@ -90,10 +91,12 @@ private static TurretState turretState = TurretState.DEFULT;
                 pinchState = PinchState.CLOSE;
                 elevatorState = ElevatorState.LEVEL3;
                 turretState = TurretState.BACKWARD;
+                changeTurretState(gamepad1);
                 break;
             case TRAVEL3:
                 pinchState = PinchState.CLOSE;
                 elevatorState = ElevatorState.LEVEL1;
+                changeTurretState(gamepad1);
                 break;
         }
     }

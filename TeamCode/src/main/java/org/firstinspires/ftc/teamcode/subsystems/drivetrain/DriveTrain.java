@@ -99,5 +99,8 @@ public class DriveTrain {
         rb.setPower(DriveTrainConstants.turnRobotIZone * (rbPower / highestPower));
     }
 
+public static void resetGyro(){
 
+
+}
 }
