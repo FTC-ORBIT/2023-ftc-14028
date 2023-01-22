@@ -26,14 +26,5 @@ public class Test extends OpMode {
     public void loop() {
 
 
-        if (gamepad1.a) {
-
-            Pinch.operate(PinchState.CLOSE);
-
-        } else {
-
-            Pinch.operate(PinchState.OPEN);
-
-        }
     }
 }

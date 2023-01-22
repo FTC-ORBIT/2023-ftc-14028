@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.hardware.OrbitGyro;
 import org.firstinspires.ftc.teamcode.subsystems.drivetrain.DriveTrain;
 import org.firstinspires.ftc.teamcode.subsystems.elevator.Elevator;
+import org.firstinspires.ftc.teamcode.subsystems.elevator.ElevatorConstants;
 import org.firstinspires.ftc.teamcode.subsystems.elevator.ElevatorState;
 import org.firstinspires.ftc.teamcode.subsystems.pinch.Pinch;
 import org.firstinspires.ftc.teamcode.subsystems.pinch.PinchConstants;
@@ -66,7 +67,7 @@ private static TurretState turretState = TurretState.DEFULT;
         state = gamepad1.x ? RobotState.TRAVEL2 : state;
         state = gamepad1.y ? RobotState.DROP : state;
         state = gamepad1.right_bumper ? RobotState.TRAVEL3 : state;
-
+        if (gamepad1.back){OrbitGyro.resetGyro();}
 
 
 
@@ -86,6 +87,7 @@ private static TurretState turretState = TurretState.DEFULT;
                 break;
             case DROP:
                 pinchState = PinchState.OPEN;
+
                 break;
             case TRAVEL2:
                 pinchState = PinchState.CLOSE;
@@ -98,6 +100,7 @@ private static TurretState turretState = TurretState.DEFULT;
                 elevatorState = ElevatorState.LEVEL1;
                 changeTurretState(gamepad1);
                 break;
+
         }
     }
 

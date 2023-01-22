@@ -17,20 +17,20 @@ public class Turret {
         motor = hardwareMap.get(DcMotor.class, "turret");
         resetEncoder();
     }
-public static void TurretPos(TurretState state){
-        switch (state){
+
+    public static void TurretPos(TurretState state) {
+        switch (state) {
             case DEFULT:
-       setTurretPos(0);
-            break;
+                setTurretPos(0);
+                break;
             case SIDE:
-            setTurretPos(1);
-            break;
+                setTurretPos(1);
+                break;
             case BACKWARD:
                 setTurretPos(2);
                 break;
         }
-}
-
+    }
 
 
     public static void operate(Gamepad gamepad) {
@@ -49,7 +49,7 @@ public static void TurretPos(TurretState state){
             gamepadChange = 0;
 
         }
-            motor.setPower(gamepadChange);
+        motor.setPower(gamepadChange);
 
 
     }
@@ -81,7 +81,7 @@ public static void TurretPos(TurretState state){
         motor.setPower(turretPID.update(getPosition()));
     }
 
-    public static void setPosition(double wantedPosition){
+    public static void setPosition(double wantedPosition) {
 
         turretPID.setWanted(wantedPosition);
         motor.setPower(turretPID.update(getPosition()));
@@ -94,7 +94,7 @@ public static void TurretPos(TurretState state){
         return isFinishedMoving;
     }
 
-    public static void resetEncoder(){
+    public static void resetEncoder() {
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
