@@ -21,8 +21,7 @@ import java.util.concurrent.Delayed;
 
 
 @TeleOp(name = "TeleOp")
-public class
-Teleop extends OpMode{
+public class Teleop extends OpMode{
 
     private static RobotState state = RobotState.INTAKE;
     private static ElevatorState elevatorState = ElevatorState.BASE;
