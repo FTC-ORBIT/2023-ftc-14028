@@ -75,23 +75,23 @@ private static TurretState turretState = TurretState.DEFULT;
             case TRAVEL1:
                 pinchState = PinchState.CLOSE;
                 elevatorState = ElevatorState.LEVEL2;
-                turretState = TurretState.BACKWARD;
-                changeFloors(gamepad2);
+                if(Elevator.getMotorPos() > 1000)  {turretState = TurretState.BACKWARD;}                changeFloors(gamepad2);
                 changeTurretState(gamepad1);
                 break;
             case INTAKE:
                 turretState = TurretState.DEFULT;
                 pinchState = PinchState.OPEN;
-                elevatorState = ElevatorState.BASE;
+               if(Turret.getPosition() < 1000){ elevatorState = ElevatorState.BASE;}
                 break;
             case DROP:
+               if(Elevator.getMotorPos() > 100){  }
                 pinchState = PinchState.OPEN;
 
                 break;
             case TRAVEL2:
                 pinchState = PinchState.CLOSE;
                 elevatorState = ElevatorState.LEVEL3;
-                turretState = TurretState.BACKWARD;
+              if(Elevator.getMotorPos() > 1000)  {turretState = TurretState.BACKWARD;}
                 changeTurretState(gamepad1);
                 break;
             case TRAVEL3:

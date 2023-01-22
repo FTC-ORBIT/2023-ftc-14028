@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems.turret;
 
 public class TurretConstants {
 
-    public static final double  turretKp = 0.001;//TODO: config
+    public static final double  turretKp = 0.002;//TODO: config
     public static final double  turretKi= 0;//TODO: config
     public static final double  turretKd= 0;//TODO: config
     public static final double  turretKf= 0;//TODO: config

@@ -17,19 +17,13 @@ apply from: '../build.dependencies.gradle'
 
 android {
     namespace = 'org.firstinspires.ftc.teamcode'
-    androidResources {
-        noCompress 'tflite'
-    }
-
-    packagingOptions {
-        jniLibs {
-            pickFirsts += ['**/*.so']
-        }
-        jniLibs.useLegacyPackaging true
-    }
 }
 
 dependencies {
     implementation project(':FtcRobotController')
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
+    implementation 'org.openftc:easyopencv:1.5.2'
+}
+dependencies {
+    implementation 'org.openftc:apriltag:1.1.0'
 }

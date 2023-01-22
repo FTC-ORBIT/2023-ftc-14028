@@ -83,20 +83,24 @@ public class DriveTrain {
         return isFinishedTurning;
     }
 
-    public static void drive(Vector drive, double r) {
-        final double lfPower = drive.y + drive.x + r;
-        final double rfPower = drive.y - drive.x - r;
-        final double lbPower = drive.y - drive.x + r;
-        final double rbPower = drive.y + drive.x - r;
-        double highestPower = 1;
+    public static void drive(Vector drive, double maxPower) {
+        final double lfPower = drive.y + drive.x;
+        final double rfPower = drive.y - drive.x;
+        final double lbPower = drive.y - drive.x;
+        final double rbPower = drive.y + drive.x;
         final double max = Math.max(Math.abs(lfPower),
                 Math.max(Math.abs(lbPower), Math.max(Math.abs(rfPower), Math.abs(rbPower))));
         if (max > 1)
-            highestPower = max;
-        lf.setPower(DriveTrainConstants.turnRobotIZone * (lfPower / highestPower));
-        rf.setPower(DriveTrainConstants.turnRobotIZone * (rfPower / highestPower));
-        lb.setPower(DriveTrainConstants.turnRobotIZone * (lbPower / highestPower));
-        rb.setPower(DriveTrainConstants.turnRobotIZone * (rbPower / highestPower));
+            maxPower = max;
+        lf.setPower(DriveTrainConstants.turnRobotIZone * (lfPower / maxPower));
+        rf.setPower(DriveTrainConstants.turnRobotIZone * (rfPower / maxPower));
+        lb.setPower(DriveTrainConstants.turnRobotIZone * (lbPower / maxPower));
+        rb.setPower(DriveTrainConstants.turnRobotIZone * (rbPower / maxPower));
     }
+        public static void getMotorsPos(int getMotorsPos){
+
+
+
+        }
 
 }

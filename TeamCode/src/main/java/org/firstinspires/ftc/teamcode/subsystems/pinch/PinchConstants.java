@@ -1,10 +1,9 @@
 package org.firstinspires.ftc.teamcode.subsystems.pinch;
 
 
-import com.acmerobotics.dashboard.config.Config;
 
 
-@Config
+
 public class PinchConstants {
 // servo 0
     public static double servo0OpenPos = 0.6;
