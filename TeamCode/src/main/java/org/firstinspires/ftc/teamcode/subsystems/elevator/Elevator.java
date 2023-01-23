@@ -69,8 +69,42 @@ public class Elevator {
         elevatorPID.setWanted(wanted);
         motor.setPower(elevatorPID.update(motor.getCurrentPosition()));
 
-        isFinishedFloor = Math.abs(motor.getCurrentPosition()) > Math.abs(wanted);
+        isFinishedFloor = Math.abs(motor.getCurrentPosition()) > Math.abs(wanted) - 30;
 
+
+    }
+
+    public static void setStateAut(int floor){
+        int wanted;
+        switch (floor) {
+            case 0:
+                wanted = ElevatorConstants.basePos;
+                break;
+            case 1:
+                wanted = ElevatorConstants.level1Pos;
+                break;
+            case 2:
+                wanted = ElevatorConstants.level2Pos;
+                break;
+            case 3:
+                wanted = ElevatorConstants.level3Pos;
+                break;
+            case 4:
+                wanted = ElevatorConstants.level4Pos;
+                break;
+            default:
+                wanted = ElevatorConstants.basePos;
+                break;
+        }
+        if (floor == 0|| floor == 2){
+            while (Math.abs(motor.getCurrentPosition()) > Math.abs(wanted) + 10){
+                setFloor(floor);
+            }
+        }else {
+            while (!(Math.abs(motor.getCurrentPosition()) > Math.abs(wanted) - 30)) {
+                setFloor(floor);
+            }
+        }
     }
 
     public static boolean isIsFinishedElevating(){

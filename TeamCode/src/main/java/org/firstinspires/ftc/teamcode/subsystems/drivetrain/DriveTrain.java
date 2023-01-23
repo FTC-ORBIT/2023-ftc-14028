@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.subsystems.drivetrain;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.internal.opmode.InstanceOpModeManager;
 import org.firstinspires.ftc.teamcode.PID;
 import org.firstinspires.ftc.teamcode.hardware.OrbitGyro;
 import org.firstinspires.ftc.teamcode.utils.Vector;
@@ -39,6 +41,8 @@ public class DriveTrain {
 
         lf.setDirection(DcMotorSimple.Direction.REVERSE);
         lb.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        OrbitGyro.init(hardwareMap);
     }
 
     public static void operate(Gamepad gamepad) {
@@ -65,17 +69,19 @@ public class DriveTrain {
                 x * Math.sin(Math.toRadians(angle)) + y * Math.cos(Math.toRadians(angle)));
     }
 
-    public static void turnRobot(double wanted) {
+    public static void turnRobot(double wanted, LinearOpMode opMode) {
         turnRobotPID.setWanted(wanted);
 
-        final double angle = OrbitGyro.wrapAnglePlusMinus180(OrbitGyro.getAngle());
+        while (Math.abs(OrbitGyro.wrapAnglePlusMinus180(OrbitGyro.getAngle())) < Math.abs(wanted) && opMode.opModeIsActive()){
 
-        lf.setPower(turnRobotPID.update(angle));
-        lb.setPower(turnRobotPID.update(angle));
-        rf.setPower(-turnRobotPID.update(angle));
-        rb.setPower(-turnRobotPID.update(angle));
+            final double angle = OrbitGyro.wrapAnglePlusMinus180(OrbitGyro.getAngle());
 
-        isFinishedTurning = Math.abs(angle) >= Math.abs(wanted);
+            lf.setPower(turnRobotPID.update(angle));
+            lb.setPower(turnRobotPID.update(angle));
+            rf.setPower(-turnRobotPID.update(angle));
+            rb.setPower(-turnRobotPID.update(angle));
+        }
+//        isFinishedTurning = Math.abs(angle) >= Math.abs(wanted);
     }
 
     public static boolean isFinishedTurn() {
@@ -97,10 +103,65 @@ public class DriveTrain {
         lb.setPower(DriveTrainConstants.turnRobotIZone * (lbPower / maxPower));
         rb.setPower(DriveTrainConstants.turnRobotIZone * (rbPower / maxPower));
     }
-        public static void getMotorsPos(int getMotorsPos){
 
-
-
+    public static void moveStraight(double wanted, LinearOpMode opMode) {
+        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        while (Math.abs(lf.getCurrentPosition())< wanted && opMode.opModeIsActive()) {
+            lf.setPower(-0.2);
+            rf.setPower(-0.2);
+            lb.setPower(0.2);
+            rb.setPower(0.2);
         }
+        lf.setPower(0);
+        rf.setPower(0);
+        lb.setPower(0);
+        rb.setPower(0);
+    }
 
+    public static void moveBack(double wanted, LinearOpMode opMode) {
+        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        while (Math.abs(lf.getCurrentPosition())< wanted && opMode.opModeIsActive()) {
+            lf.setPower(0.2);
+            rf.setPower(0.2);
+            lb.setPower(-0.2);
+            rb.setPower(-0.2);
+        }
+        lf.setPower(0);
+        rf.setPower(0);
+        lb.setPower(0);
+        rb.setPower(0);
+    }
+
+    public static void moveRight(double wanted, LinearOpMode opMode) {
+        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        while (Math.abs(lf.getCurrentPosition())< wanted && opMode.opModeIsActive()) {
+            lf.setPower(0.5);
+            rf.setPower(-0.5);
+            lb.setPower(-0.5);
+            rb.setPower(0.5);
+        }
+        lf.setPower(0);
+        rf.setPower(0);
+        lb.setPower(0);
+        rb.setPower(0);
+
+    }
+
+    public static void moveLeft(double wanted, LinearOpMode opMode) {
+        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        while (Math.abs(lf.getCurrentPosition())< wanted && opMode.opModeIsActive()) {
+            lf.setPower(-0.5);
+            rf.setPower(0.5);
+            lb.setPower(0.5);
+            rb.setPower(-0.5);
+        }
+        lf.setPower(0);
+        rf.setPower(0);
+        lb.setPower(0);
+        rb.setPower(0);
+    }
 }

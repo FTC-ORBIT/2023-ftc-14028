@@ -136,8 +136,8 @@ public class AprilTagDetector {
                     opMode.telemetry.addLine("(The tag has never been seen)");
                 }
                 else
-                 {
-                   opMode.telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
+                {
+                    opMode.telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
                     tagToTelemetry(tagOfInterest, opMode);
                 }
 
@@ -166,7 +166,7 @@ public class AprilTagDetector {
         }
 
         if(tagOfInterest.id == leftTagNum) {
-             parkingSpot = ParkingSpot.LEFT;
+            parkingSpot = ParkingSpot.LEFT;
         }else if (tagOfInterest.id == middleTagNum){
             parkingSpot = ParkingSpot.MIDDLE;
         }else if (tagOfInterest.id == rightTagNum){

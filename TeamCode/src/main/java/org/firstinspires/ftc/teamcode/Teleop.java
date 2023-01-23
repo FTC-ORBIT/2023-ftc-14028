@@ -96,7 +96,8 @@ private static TurretState turretState = TurretState.DEFULT;
                 break;
             case TRAVEL3:
                 pinchState = PinchState.CLOSE;
-                elevatorState = ElevatorState.LEVEL1;
+                turretState = TurretState.DEFULT;
+               if(Turret.getPosition() < 1000){ elevatorState = ElevatorState.LEVEL1;}
                 changeTurretState(gamepad1);
                 break;
 
