@@ -49,8 +49,8 @@ public class AprilTagDetector {
     // You will need to do your own calibration for other configurations!
     static double fx = 578.272;
     static double fy = 578.272;
-    static double cx = 402.145;
-    static double cy = 221.506;
+    static double cx = 500.145;
+    static double cy = 300.506;
 
     // UNITS ARE METERS
     static double tagsize = 0.166;

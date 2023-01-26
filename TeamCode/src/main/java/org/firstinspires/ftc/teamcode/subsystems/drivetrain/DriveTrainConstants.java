@@ -23,4 +23,13 @@ public class DriveTrainConstants {
     public static double turnRobotKf = 0;//TODO: config
     public static double turnRobotIZone = 0;//TODO: config
 
+//    PID move xy
+
+
+    public static double moveXYKp = 0.001;//TODO: config
+    public static double moveXYKi = 0;//TODO: config
+    public static double moveXYKd = 0;//TODO: config
+    public static double moveXYKf = 0;//TODO: config
+    public static double moveXYIZone = 0;//TODO: config
+
 }

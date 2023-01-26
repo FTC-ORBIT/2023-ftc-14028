@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.subsystems.drivetrain.DriveTrainConstants;
 import org.firstinspires.ftc.teamcode.subsystems.elevator.Elevator;
 import org.firstinspires.ftc.teamcode.subsystems.pinch.Pinch;
 import org.firstinspires.ftc.teamcode.subsystems.pinch.PinchState;
+import org.firstinspires.ftc.teamcode.subsystems.turret.Turret;
 
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "RightBlue")
@@ -24,44 +25,12 @@ public class RightBlue extends LinearOpMode {
         Elevator.init(this.hardwareMap);
         Pinch.init(this.hardwareMap);
 
-        while (opModeInInit()){
+        while (opModeInInit()) {
             AprilTagDetector.runAprilTagDetection(this);
         }
         waitForStart();
-        Pinch.closePinch();
-        DriveTrain.moveStraight(100, this);
-        DriveTrain.moveRight(100, this);
+        // Pinch.closePinch();
 
-        DriveTrain.moveStraight(1000, this);
-
-        DriveTrain.moveLeft(590, this);
-        Elevator.setStateAut(3);
-        DriveTrain.moveStraight(65, this);
-         double startTime = runTime.seconds();
-        while (time- startTime< 0.5){}
-        Elevator.setStateAut(2);
-        Pinch.openPinch();
-        startTime = runTime.seconds();
-        while (time- startTime< 0.5){}
-        DriveTrain.moveBack(100, this);
-        DriveTrain.moveRight(625,this);
-
-        startTime = runTime.seconds();
-        while (time- startTime< 0.5){}
-
-        if (AprilTagDetector.wantedParkingSpot() != null) {
-            switch (AprilTagDetector.wantedParkingSpot()) {
-                case LEFT:
-                    DriveTrain.moveLeft(1230, this);
-                    break;
-                case RIGHT:
-                    DriveTrain.moveRight(1100,this);
-                    break;
-            }
-        }
-        Elevator.setStateAut(0);
 
     }
-
-
 }

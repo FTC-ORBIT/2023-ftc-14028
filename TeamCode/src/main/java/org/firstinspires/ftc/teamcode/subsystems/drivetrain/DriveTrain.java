@@ -10,6 +10,7 @@ import org.firstinspires.ftc.robotcore.internal.opmode.InstanceOpModeManager;
 import org.firstinspires.ftc.teamcode.PID;
 import org.firstinspires.ftc.teamcode.hardware.OrbitGyro;
 import org.firstinspires.ftc.teamcode.utils.Vector;
+import org.opencv.core.TickMeter;
 
 
 public class DriveTrain {
@@ -27,6 +28,14 @@ public class DriveTrain {
             DriveTrainConstants.turnRobotKf,
             DriveTrainConstants.turnRobotIZone);
 
+    private static PID moveXYPID = new PID(DriveTrainConstants.moveXYKp,
+            DriveTrainConstants.moveXYKi,
+            DriveTrainConstants.moveXYKd,
+            DriveTrainConstants.moveXYKf,
+            DriveTrainConstants.moveXYIZone);
+
+
+
 
     public static void init(HardwareMap hardwareMap) {
         rf = hardwareMap.get(DcMotor.class, "rf");
@@ -43,6 +52,7 @@ public class DriveTrain {
         lb.setDirection(DcMotorSimple.Direction.REVERSE);
 
         OrbitGyro.init(hardwareMap);
+        resetMotors();
     }
 
     public static void operate(Gamepad gamepad) {
@@ -84,84 +94,64 @@ public class DriveTrain {
 //        isFinishedTurning = Math.abs(angle) >= Math.abs(wanted);
     }
 
-    public static boolean isFinishedTurn() {
 
-        return isFinishedTurning;
-    }
+    private static double leftFactor = 0;
+    private static double rightFactor = 0;
 
-    public static void drive(Vector drive, double maxPower) {
-        final double lfPower = drive.y + drive.x;
-        final double rfPower = drive.y - drive.x;
-        final double lbPower = drive.y - drive.x;
-        final double rbPower = drive.y + drive.x;
-        final double max = Math.max(Math.abs(lfPower),
-                Math.max(Math.abs(lbPower), Math.max(Math.abs(rfPower), Math.abs(rbPower))));
-        if (max > 1)
-            maxPower = max;
-        lf.setPower(DriveTrainConstants.turnRobotIZone * (lfPower / maxPower));
-        rf.setPower(DriveTrainConstants.turnRobotIZone * (rfPower / maxPower));
-        lb.setPower(DriveTrainConstants.turnRobotIZone * (lbPower / maxPower));
-        rb.setPower(DriveTrainConstants.turnRobotIZone * (rbPower / maxPower));
-    }
+    private static double leftWanted = 0;
+    private static double rightWanted = 0;
 
-    public static void moveStraight(double wanted, LinearOpMode opMode) {
-        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        while (Math.abs(lf.getCurrentPosition())< wanted && opMode.opModeIsActive()) {
-            lf.setPower(-0.2);
-            rf.setPower(-0.2);
-            lb.setPower(0.2);
-            rb.setPower(0.2);
+
+
+
+    public static void moveXY(double wantedX, double wantedY){
+        leftWanted = wantedY + wantedX;
+        rightWanted = wantedY - wantedX;
+
+        leftFactor = leftWanted / Math.max(Math.abs(leftWanted), Math.abs(rightWanted));
+        rightFactor = rightWanted / Math.max(Math.abs(leftWanted), Math.abs(rightWanted));
+
+        if (Math.abs(leftWanted) < Math.abs(rightWanted)) {
+            moveXYPID.setWanted(rightWanted);
+            while (Math.abs(rf.getCurrentPosition()) < Math.abs(rightWanted)){
+                lf.setPower(-moveXYPID.update(rf.getCurrentPosition()) * leftFactor);
+                rf.setPower(-moveXYPID.update(rf.getCurrentPosition()) * rightFactor);
+                rb.setPower(moveXYPID.update(rf.getCurrentPosition()) * leftFactor);
+                lb.setPower(moveXYPID.update(rf.getCurrentPosition()) * rightFactor);
+            }
+            breakMotors();
+
         }
+        else {
+            moveXYPID.setWanted(leftWanted);
+            while (Math.abs(lf.getCurrentPosition()) < Math.abs(leftWanted)){
+                lf.setPower(moveXYPID.update(lf.getCurrentPosition()) * leftFactor);
+                rf.setPower(moveXYPID.update(lf.getCurrentPosition()) * rightFactor);
+                rb.setPower(moveXYPID.update(lf.getCurrentPosition()) * leftFactor);
+                lb.setPower(moveXYPID.update(lf.getCurrentPosition()) * rightFactor);
+            }
+            breakMotors();
+        }
+
+
+
+    }
+    public static void breakMotors(){
         lf.setPower(0);
         rf.setPower(0);
-        lb.setPower(0);
         rb.setPower(0);
+        lb.setPower(0);
     }
 
-    public static void moveBack(double wanted, LinearOpMode opMode) {
+    private static void resetMotors(){
         lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        while (Math.abs(lf.getCurrentPosition())< wanted && opMode.opModeIsActive()) {
-            lf.setPower(0.2);
-            rf.setPower(0.2);
-            lb.setPower(-0.2);
-            rb.setPower(-0.2);
-        }
-        lf.setPower(0);
-        rf.setPower(0);
-        lb.setPower(0);
-        rb.setPower(0);
+        rf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public static void moveRight(double wanted, LinearOpMode opMode) {
-        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        while (Math.abs(lf.getCurrentPosition())< wanted && opMode.opModeIsActive()) {
-            lf.setPower(0.5);
-            rf.setPower(-0.5);
-            lb.setPower(-0.5);
-            rb.setPower(0.5);
-        }
-        lf.setPower(0);
-        rf.setPower(0);
-        lb.setPower(0);
-        rb.setPower(0);
-
-    }
-
-    public static void moveLeft(double wanted, LinearOpMode opMode) {
-        lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        while (Math.abs(lf.getCurrentPosition())< wanted && opMode.opModeIsActive()) {
-            lf.setPower(-0.5);
-            rf.setPower(0.5);
-            lb.setPower(0.5);
-            rb.setPower(-0.5);
-        }
-        lf.setPower(0);
-        rf.setPower(0);
-        lb.setPower(0);
-        rb.setPower(0);
-    }
 }

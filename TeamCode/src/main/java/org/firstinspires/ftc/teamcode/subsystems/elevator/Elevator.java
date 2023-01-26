@@ -120,5 +120,7 @@ public class Elevator {
         motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
-
+public static void breakMotor(){
+        motor.setPower(0);
+}
 }
