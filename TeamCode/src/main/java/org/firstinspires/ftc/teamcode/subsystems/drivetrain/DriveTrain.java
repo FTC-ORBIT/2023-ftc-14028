@@ -5,7 +5,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.opmode.InstanceOpModeManager;
 import org.firstinspires.ftc.teamcode.PID;
 import org.firstinspires.ftc.teamcode.hardware.OrbitGyro;
@@ -14,6 +16,8 @@ import org.opencv.core.TickMeter;
 
 
 public class DriveTrain {
+
+    private static ElapsedTime elapsedTime = new ElapsedTime();
 
     private static DcMotor lf;
     private static DcMotor rf;
@@ -33,7 +37,6 @@ public class DriveTrain {
             DriveTrainConstants.moveXYKd,
             DriveTrainConstants.moveXYKf,
             DriveTrainConstants.moveXYIZone);
-
 
 
 
@@ -59,8 +62,8 @@ public class DriveTrain {
         final Vector finalVector = vectorRotation(gamepad.left_stick_x, gamepad.left_stick_y, OrbitGyro.wrapAngle360(OrbitGyro.getAngle()));
 
 
-        lf.setPower(finalVector.y + finalVector.x - gamepad.left_trigger + gamepad.right_trigger);
-        rf.setPower(finalVector.y - finalVector.x + gamepad.left_trigger - gamepad.right_trigger);
+        lf.setPower(-finalVector.y + finalVector.x - gamepad.left_trigger + gamepad.right_trigger);
+        rf.setPower(-finalVector.y - finalVector.x + gamepad.left_trigger - gamepad.right_trigger);
         lb.setPower(-finalVector.y - finalVector.x - gamepad.left_trigger + gamepad.right_trigger);
         rb.setPower(-finalVector.y + finalVector.x + gamepad.left_trigger - gamepad.right_trigger);
 
@@ -95,53 +98,43 @@ public class DriveTrain {
     }
 
 
-    private static double leftFactor = 0;
-    private static double rightFactor = 0;
-
-    private static double leftWanted = 0;
-    private static double rightWanted = 0;
 
 
 
 
     public static void moveXY(double wantedX, double wantedY){
-        leftWanted = wantedY + wantedX;
-        rightWanted = wantedY - wantedX;
+        resetMotors();
 
-        leftFactor = leftWanted / Math.max(Math.abs(leftWanted), Math.abs(rightWanted));
-        rightFactor = rightWanted / Math.max(Math.abs(leftWanted), Math.abs(rightWanted));
+        double leftWanted = wantedY + wantedX;
+        double rightWanted = wantedY - wantedX;
 
-        if (Math.abs(leftWanted) < Math.abs(rightWanted)) {
+        double max = Math.max(Math.abs(leftWanted), Math.abs(rightWanted));
+        double leftFactor = leftWanted / max;
+        double rightFactor = rightWanted / max;
+
+        if (Math.abs(leftWanted) > Math.abs(rightWanted)) {
             moveXYPID.setWanted(rightWanted);
-            while (Math.abs(rf.getCurrentPosition()) < Math.abs(rightWanted)){
-                lf.setPower(-moveXYPID.update(rf.getCurrentPosition()) * leftFactor);
-                rf.setPower(-moveXYPID.update(rf.getCurrentPosition()) * rightFactor);
-                rb.setPower(moveXYPID.update(rf.getCurrentPosition()) * leftFactor);
-                lb.setPower(moveXYPID.update(rf.getCurrentPosition()) * rightFactor);
+            while (Math.abs(rf.getCurrentPosition()) > (rightWanted)){
+                lf.setPower(moveXYPID.update(Math.abs(rf.getCurrentPosition())) * leftFactor);
+                rf.setPower(moveXYPID.update(Math.abs(rf.getCurrentPosition())) * leftFactor);
+                rb.setPower(moveXYPID.update(Math.abs(rf.getCurrentPosition())) * leftFactor);
+                lb.setPower(moveXYPID.update(Math.abs(rf.getCurrentPosition())) * leftFactor);
             }
-            breakMotors();
 
         }
         else {
-            moveXYPID.setWanted(leftWanted);
+            moveXYPID.setWanted(Math.abs(leftWanted));
             while (Math.abs(lf.getCurrentPosition()) < Math.abs(leftWanted)){
-                lf.setPower(moveXYPID.update(lf.getCurrentPosition()) * leftFactor);
-                rf.setPower(moveXYPID.update(lf.getCurrentPosition()) * rightFactor);
-                rb.setPower(moveXYPID.update(lf.getCurrentPosition()) * leftFactor);
-                lb.setPower(moveXYPID.update(lf.getCurrentPosition()) * rightFactor);
+                lf.setPower(moveXYPID.update(Math.abs(lf.getCurrentPosition())) * leftFactor);
+                rf.setPower(moveXYPID.update(Math.abs(lf.getCurrentPosition())) * rightFactor);
+                rb.setPower(moveXYPID.update(Math.abs(lf.getCurrentPosition())) * leftFactor);
+                lb.setPower(moveXYPID.update(Math.abs(lf.getCurrentPosition())) * rightFactor);
             }
-            breakMotors();
         }
 
-
-
+        breakMotors();
     }
-    public static void breakMotors(){
-        lf.setPower(0);
-        rf.setPower(0);
-        rb.setPower(0);
-        lb.setPower(0);
-    }
+
 
     private static void resetMotors(){
         lf.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -153,5 +146,17 @@ public class DriveTrain {
         rb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+    private static void breakMotors(){
+        double startTime = elapsedTime.time();
+
+        while (elapsedTime.time() - 0.2 < startTime) {
+            lf.setPower(0);
+            rf.setPower(0);
+            rb.setPower(0);
+            lb.setPower(0);
+        }
+    }
+
 
 }
+

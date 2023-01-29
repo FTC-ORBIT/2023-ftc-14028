@@ -11,9 +11,9 @@ public class ElevatorConstants {
 
 //    elevator floors
     public static final int basePos = 0;
-    public static final int level1Pos = 132;
-    public static final int level2Pos = 1743;
-    public static final int level3Pos = 2931;
+    public static final int level1Pos = 90;
+    public static final int level2Pos = 1200;
+    public static final int level3Pos = 2050;
     public static final int level4Pos = 0;//TODO: config
 
 

@@ -60,6 +60,7 @@ private static TurretState turretState = TurretState.DEFULT;
     private static void subSystemManager(Gamepad gamepad1, Gamepad gamepad2){
 
         changeTurretState(gamepad2);
+        Elevator.manualEevator(gamepad1);
 
         state = gamepad1.a ? RobotState.INTAKE : state;
         state = gamepad1.b ? RobotState.TRAVEL1 : state;

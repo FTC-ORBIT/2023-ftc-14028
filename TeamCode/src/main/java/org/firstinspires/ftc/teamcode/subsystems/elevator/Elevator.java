@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems.elevator;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.PID;
@@ -122,5 +123,18 @@ public class Elevator {
     }
 public static void breakMotor(){
         motor.setPower(0);
+}
+public static void manualEevator(Gamepad gamepad){
+
+//        double gamepadChange = -gamepad.right_stick_y;
+//
+//        if (motor.getCurrentPosition() < 100 && gamepad.right_stick_y > 0){
+//            gamepadChange = 0;
+//        }
+//        if(motor.getCurrentPosition() > 2950 && gamepad.right_stick_y >0){
+//            gamepadChange = 0;
+//        }
+//        motor.setPower(-gamepad.right_stick_y);
+
 }
 }

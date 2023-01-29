@@ -33,26 +33,26 @@ public class Turret {
     }
 
 
-    public static void operate(Gamepad gamepad) {
+//    public static void operate(Gamepad gamepad) {
+//
+//
+//        double gamepadChange = -gamepad.right_stick_x;
+//
+//        if (motor.getCurrentPosition() < 350 && gamepad.right_stick_x > 0) {
+//
+//            gamepadChange = 0;
+//        }
+//
+//
+//        if (motor.getCurrentPosition() > 2750 && gamepad.right_stick_x < 0) {
+//
+//            gamepadChange = 0;
+//
+//        }
+//        motor.setPower(gamepadChange);
 
 
-        double gamepadChange = -gamepad.right_stick_x;
-
-        if (motor.getCurrentPosition() < 350 && gamepad.right_stick_x > 0) {
-
-            gamepadChange = 0;
-        }
-
-
-        if (motor.getCurrentPosition() > 2750 && gamepad.right_stick_x < 0) {
-
-            gamepadChange = 0;
-
-        }
-        motor.setPower(gamepadChange);
-
-
-    }
+//    }
 
     public static double getPosition() {
         return motor.getCurrentPosition();
@@ -98,5 +98,8 @@ public class Turret {
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+    }
+    public static void breakMotor(){
+        motor.setPower(0);
     }
 }
