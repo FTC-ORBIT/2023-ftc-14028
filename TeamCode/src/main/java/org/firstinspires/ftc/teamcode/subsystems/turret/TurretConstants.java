@@ -13,6 +13,6 @@ public class TurretConstants {
     public static final double ticksToAngle = 3896 / 365;
 
     public static final int turretDefult = 0;
-    public static final int turretSide = 1556;
+    public static final int turretSide = 1500;
     public static final int turretBackward = 3000;
 }

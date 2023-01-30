@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems.elevator;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -63,6 +64,15 @@ public class Elevator {
             case 4:
                 wanted = ElevatorConstants.level4Pos;
                 break;
+            case 5:
+                wanted =  ElevatorConstants.level5Pos;
+                break;
+            case 6:
+                wanted = ElevatorConstants.side1Pos;
+                break;
+            case 7:
+                wanted = ElevatorConstants.level6Pos;
+                break;
             default:
                 wanted = ElevatorConstants.basePos;
                 break;
@@ -75,7 +85,7 @@ public class Elevator {
 
     }
 
-    public static void setStateAut(int floor){
+    public static void setStateAut(int floor, LinearOpMode opMode){
         int wanted;
         switch (floor) {
             case 0:
@@ -93,19 +103,30 @@ public class Elevator {
             case 4:
                 wanted = ElevatorConstants.level4Pos;
                 break;
+            case 5:
+                wanted = ElevatorConstants.level5Pos;
+                break;
+            case 6:
+                wanted = ElevatorConstants.side1Pos;
+                break;
+            case 7:
+                wanted = ElevatorConstants.level6Pos;
+                break;
             default:
                 wanted = ElevatorConstants.basePos;
                 break;
         }
-        if (floor == 0|| floor == 2){
-            while (Math.abs(motor.getCurrentPosition()) > Math.abs(wanted) + 10){
+        if (floor == 0|| floor == 2 || floor == 5){
+            while (Math.abs(motor.getCurrentPosition()) > Math.abs(wanted) + 10 && opMode.opModeIsActive()){
                 setFloor(floor);
             }
         }else {
-            while (!(Math.abs(motor.getCurrentPosition()) > Math.abs(wanted) - 30)) {
+            while (!(Math.abs(motor.getCurrentPosition()) > Math.abs(wanted) - 10) && opMode.opModeIsActive()) {
                 setFloor(floor);
             }
         }
+
+        breakMotor();
     }
 
     public static boolean isIsFinishedElevating(){

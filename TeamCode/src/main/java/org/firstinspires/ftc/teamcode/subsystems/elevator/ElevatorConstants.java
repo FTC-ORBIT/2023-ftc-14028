@@ -15,7 +15,8 @@ public class ElevatorConstants {
     public static final int level2Pos = 1200;
     public static final int level3Pos = 2050;
     public static final int level4Pos = 0;//TODO: config
+    public static final int level5Pos = 1950;
 
-
-
+    public static final int level6Pos = 2200;
+    public static final int side1Pos = 540;
 }

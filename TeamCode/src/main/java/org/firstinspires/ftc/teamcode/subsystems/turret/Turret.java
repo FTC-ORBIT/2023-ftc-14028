@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode.subsystems.turret;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.PID;
-import org.firstinspires.ftc.teamcode.subsystems.elevator.ElevatorConstants;
 
 public class Turret {
     private static DcMotor motor;
@@ -21,13 +19,13 @@ public class Turret {
     public static void TurretPos(TurretState state) {
         switch (state) {
             case DEFULT:
-                setTurretPos(0);
+                setTurretState(0);
                 break;
             case SIDE:
-                setTurretPos(1);
+                setTurretState(1);
                 break;
             case BACKWARD:
-                setTurretPos(2);
+                setTurretState(2);
                 break;
         }
     }
@@ -61,7 +59,7 @@ public class Turret {
 
     public static boolean isFinishedMoving = false;
 
-    public static void setTurretPos(int turretPos) {
+    public static void setTurretState(int turretPos) {
 
         int wanted;
         switch (turretPos) {
@@ -77,16 +75,21 @@ public class Turret {
             default:
                 wanted = TurretConstants.turretDefult;
         }
-        turretPID.setWanted(wanted);
-        motor.setPower(turretPID.update(getPosition()));
+        setPosition(wanted);
     }
 
-    public static void setPosition(double wantedPosition) {
+    private static void setPosition(double wantedPosition) {
 
         turretPID.setWanted(wantedPosition);
         motor.setPower(turretPID.update(getPosition()));
 
-        isFinishedMoving = Math.abs(motor.getCurrentPosition()) > Math.abs(wantedPosition);
+        isFinishedMoving = wantedPosition != 0 ? Math.abs(motor.getCurrentPosition()) > Math.abs(wantedPosition) - 20 : Math.abs(motor.getCurrentPosition()) < Math.abs(wantedPosition) + 20;
+    }
+
+    public static void setPosAuto(int turretPos){
+        while (!isFinishedMoving()){setTurretState(turretPos);}
+        isFinishedMoving = false;
+        breakMotor();
     }
 
 
