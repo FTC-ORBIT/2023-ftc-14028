@@ -12,6 +12,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.opmode.InstanceOpModeManager;
 import org.firstinspires.ftc.teamcode.PID;
 import org.firstinspires.ftc.teamcode.hardware.OrbitGyro;
+import org.firstinspires.ftc.teamcode.subsystems.elevator.Elevator;
+import org.firstinspires.ftc.teamcode.subsystems.elevator.ElevatorState;
 import org.firstinspires.ftc.teamcode.utils.Vector;
 import org.opencv.core.TickMeter;
 
@@ -95,7 +97,7 @@ public class DriveTrain {
             rf.setPower(-turnRobotPID.update(angle));
             rb.setPower(-turnRobotPID.update(angle));
         }
-//        isFinishedTurning = Math.abs(angle) >= Math.abs(wanted);
+          isFinishedTurning = Math.abs(OrbitGyro.getAngle()) >= Math.abs(wanted);
     }
 
 
@@ -103,7 +105,8 @@ public class DriveTrain {
 
 
 
-    public static void moveXY(double wantedX, double wantedY, LinearOpMode opMode){
+
+    public static void moveXY(double wantedX, double wantedY ,int floor,LinearOpMode opMode){
         resetMotors();
 
         double leftWanted = wantedY + wantedX;
@@ -113,23 +116,30 @@ public class DriveTrain {
         double leftFactor = leftWanted / max;
         double rightFactor = rightWanted / max;
 
-        if (Math.abs(leftWanted) > Math.abs(rightWanted)) {
+        if (Math.abs(leftWanted) < Math.abs(rightWanted)) {
             moveXYPID.setWanted(rightWanted);
-            while (Math.abs(rf.getCurrentPosition()) > (rightWanted) && opMode.opModeIsActive()){
-                lf.setPower(Math.max(0.3,moveXYPID.update(Math.abs(rf.getCurrentPosition()))) * leftFactor);
-                rf.setPower(moveXYPID.update(Math.abs(rf.getCurrentPosition())) * rightFactor);
-                rb.setPower(moveXYPID.update(Math.abs(rf.getCurrentPosition())) * leftFactor);
-                lb.setPower(moveXYPID.update(Math.abs(rf.getCurrentPosition())) * rightFactor);
+            while ((Math.abs(rf.getCurrentPosition()) > (rightWanted) || !Elevator.isIsFinishedElevating() && opMode.opModeIsActive())){
+                lf.setPower(Math.min(0.7,Math.max(0.15,moveXYPID.update(Math.abs(rf.getCurrentPosition())))) * leftFactor);
+                rf.setPower(Math.min(0.7,Math.max(0.15,moveXYPID.update(Math.abs(rf.getCurrentPosition())))) * rightFactor);
+                rb.setPower(Math.min(0.7,Math.max(0.15,moveXYPID.update(Math.abs(rf.getCurrentPosition())))) * leftFactor);
+                lb.setPower(Math.min(0.7,Math.max(0.15,moveXYPID.update(Math.abs(rf.getCurrentPosition())))) * rightFactor);
+                Elevator.setFloor(floor);
             }
 
         }
         else {
             moveXYPID.setWanted(Math.abs(leftWanted));
-            while (Math.abs(lf.getCurrentPosition()) < Math.abs(leftWanted) && opMode.opModeIsActive()){
+            while ((Math.abs(lf.getCurrentPosition()) < Math.abs(leftWanted) || !Elevator.isIsFinishedElevating()) && opMode.opModeIsActive()){
                 lf.setPower(Math.min(0.7,Math.max(0.15,moveXYPID.update(Math.abs(lf.getCurrentPosition())))) * leftFactor);
                 rf.setPower(Math.min(0.7,Math.max(0.15,moveXYPID.update(Math.abs(lf.getCurrentPosition())))) * rightFactor);
                 rb.setPower(Math.min(0.7,Math.max(0.15,moveXYPID.update(Math.abs(lf.getCurrentPosition())))) * leftFactor);
                 lb.setPower(Math.min(0.7,Math.max(0.15,moveXYPID.update(Math.abs(lf.getCurrentPosition())))) * rightFactor);
+                opMode.telemetry.addData("current wheels", lf.getCurrentPosition());
+                opMode.telemetry.update();
+                Elevator.setFloor(floor);
+                opMode.telemetry.addData("current elevator state", Elevator.isIsFinishedElevating());
+                opMode.telemetry.update();
+
             }
         }
 
@@ -157,7 +167,5 @@ public class DriveTrain {
             lb.setPower(0);
         }
     }
-
-
 }
 

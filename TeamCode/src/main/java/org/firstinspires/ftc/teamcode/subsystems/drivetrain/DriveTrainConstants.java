@@ -17,7 +17,7 @@ public class DriveTrainConstants {
 
     //   PID turn robot
 
-    public static double turnRobotKp = 0.001;//TODO: config
+    public static double turnRobotKp = 0.002;//TODO: config
     public static double turnRobotKi = 0;//TODO: config
     public static double turnRobotKd = 0;//TODO: config
     public static double turnRobotKf = 0;//TODO: config
