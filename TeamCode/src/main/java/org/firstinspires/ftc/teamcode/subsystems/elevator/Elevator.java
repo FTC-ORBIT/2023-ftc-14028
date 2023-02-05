@@ -121,12 +121,12 @@ public class Elevator {
                 wanted = ElevatorConstants.basePos;
                 break;
         }
-        if (floor == 0 || floor == 2 || floor == 5) {
+        if (floor == 0 || floor == 4 || floor == 7) {
             while (Math.abs(motor.getCurrentPosition()) > Math.abs(wanted) + 10 && opMode.opModeIsActive()) {
                 setFloor(floor);
             }
         } else {
-            while (!(Math.abs(motor.getCurrentPosition()) > Math.abs(wanted) - 10) && opMode.opModeIsActive()) {
+            while (!(Math.abs(motor.getCurrentPosition()) > Math.abs(wanted) - 100) && opMode.opModeIsActive()) {
                 setFloor(floor);
             }
         }

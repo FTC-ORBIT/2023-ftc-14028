@@ -57,7 +57,7 @@ private static TurretState turretState = TurretState.DEFULT;
 
     }
 
-    private static void subSystemManager(Gamepad gamepad1, Gamepad gamepad2){
+    private static void subSystemManager(Gamepad gamepad1, Gamepad gamepad2) {
 
         changeTurretState(gamepad2);
         Elevator.manualEevator(gamepad1);
@@ -68,39 +68,53 @@ private static TurretState turretState = TurretState.DEFULT;
         state = gamepad1.x ? RobotState.TRAVEL2 : state;
         state = gamepad1.left_bumper ? RobotState.DROP : state;
         state = gamepad1.right_bumper ? RobotState.TRAVEL3 : state;
-        if (gamepad1.back){OrbitGyro.resetGyro();}
+        if (gamepad1.back) {
+            OrbitGyro.resetGyro();
+        }
 
 
-
-
-        switch (state){
+        switch (state) {
             case TRAVEL1:
                 pinchState = PinchState.CLOSE;
                 elevatorState = ElevatorState.LEVEL2;
-                if(Elevator.getMotorPos() > 1000)  {turretState = TurretState.BACKWARD;}                changeFloors(gamepad2);
+                if (Elevator.getMotorPos() > 1000) {
+                    turretState = TurretState.BACKWARD;
+                }
+                changeFloors(gamepad2);
                 changeTurretState(gamepad1);
                 break;
             case INTAKE:
                 turretState = TurretState.DEFULT;
                 pinchState = PinchState.OPEN;
-                if(Turret.getPosition() < 1000){ elevatorState = ElevatorState.BASE;}
+                if (Turret.getPosition() < 1000) {
+                    elevatorState = ElevatorState.BASE;
+                }
                 break;
             case DROP:
-                switch (elevatorState) {
-                    case LEVEL2:
-                        Elevator.setFloor(5);
-                        break;
-                    case LEVEL3:
-                        Elevator.setFloor(6);
-                        break;
-                    case LEVEL4:
-                        Elevator.setFloor(7);
-                        break;
-                    default:
-                        Elevator.setFloor(3);
-                        break;
-                }
-                Pinch.openPinch();
+//
+//                if (Elevator.getMotorPos() > 1180 && Elevator.getMotorPos() < 1219) {Elevator.setFloor(5);}
+//
+//                if (Elevator.getMotorPos() > 1080 && Elevator.getMotorPos() < 1130) {
+//                    Pinch.openPinch();
+//                }
+//
+//
+//                if (Elevator.getMotorPos() > 2030 && Elevator.getMotorPos() < 2070) {
+//                    Elevator.setFloor(6);
+//                }
+//        if (Elevator.getMotorPos() > 1930 && Elevator.getMotorPos() < 1980) {
+//            Pinch.openPinch();
+//        }
+//
+//        if (Elevator.getMotorPos() > 2900 && Elevator.getMotorPos() < 2970) {
+//            Elevator.setFloor(7);
+//        }
+//        if (Elevator.getMotorPos() > 2730 && Elevator.getMotorPos() < 2770) {
+//            Pinch.openPinch();
+//        } else Pinch.openPinch();
+
+
+
             case TRAVEL2:
                 pinchState = PinchState.CLOSE;
                 elevatorState = ElevatorState.LEVEL3;

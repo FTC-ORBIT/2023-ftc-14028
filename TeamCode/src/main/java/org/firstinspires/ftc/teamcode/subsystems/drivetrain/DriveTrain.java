@@ -106,7 +106,7 @@ public class DriveTrain {
 
 
 
-    public static void moveXY(double wantedX, double wantedY ,int floor,LinearOpMode opMode){
+    public static void moveXY(double wantedX, double wantedY,int floor ,LinearOpMode opMode){
         resetMotors();
 
         double leftWanted = wantedY + wantedX;
@@ -118,7 +118,7 @@ public class DriveTrain {
 
         if (Math.abs(leftWanted) < Math.abs(rightWanted)) {
             moveXYPID.setWanted(rightWanted);
-            while ((Math.abs(rf.getCurrentPosition()) > (rightWanted) || !Elevator.isIsFinishedElevating() && opMode.opModeIsActive())){
+            while ((Math.abs(rf.getCurrentPosition()) < Math.abs(rightWanted) || !Elevator.isIsFinishedElevating() && opMode.opModeIsActive())){
                 lf.setPower(Math.min(0.7,Math.max(0.15,moveXYPID.update(Math.abs(rf.getCurrentPosition())))) * leftFactor);
                 rf.setPower(Math.min(0.7,Math.max(0.15,moveXYPID.update(Math.abs(rf.getCurrentPosition())))) * rightFactor);
                 rb.setPower(Math.min(0.7,Math.max(0.15,moveXYPID.update(Math.abs(rf.getCurrentPosition())))) * leftFactor);
@@ -129,7 +129,7 @@ public class DriveTrain {
         }
         else {
             moveXYPID.setWanted(Math.abs(leftWanted));
-            while ((Math.abs(lf.getCurrentPosition()) < Math.abs(leftWanted) || !Elevator.isIsFinishedElevating()) && opMode.opModeIsActive()){
+            while ((Math.abs(lf.getCurrentPosition()) < Math.abs(leftWanted) ||  !Elevator.isIsFinishedElevating()) && opMode.opModeIsActive()){
                 lf.setPower(Math.min(0.7,Math.max(0.15,moveXYPID.update(Math.abs(lf.getCurrentPosition())))) * leftFactor);
                 rf.setPower(Math.min(0.7,Math.max(0.15,moveXYPID.update(Math.abs(lf.getCurrentPosition())))) * rightFactor);
                 rb.setPower(Math.min(0.7,Math.max(0.15,moveXYPID.update(Math.abs(lf.getCurrentPosition())))) * leftFactor);
