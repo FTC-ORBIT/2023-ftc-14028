@@ -121,7 +121,7 @@ public class Elevator {
                 wanted = ElevatorConstants.basePos;
                 break;
         }
-        if (floor == 0 || floor == 4 || floor == 7) {
+        if (floor == 0 || floor == 5 || floor == 7) {
             while (Math.abs(motor.getCurrentPosition()) > Math.abs(wanted) + 10 && opMode.opModeIsActive()) {
                 setFloor(floor);
             }
@@ -168,11 +168,10 @@ public class Elevator {
 
     public static void elevatorDown(Gamepad gamepad) {
 
-        double minusFloor;
-        if (motor.getCurrentPosition() > 100 && gamepad.left_bumper) {
+
         }
     }
-}
+
 
 
 

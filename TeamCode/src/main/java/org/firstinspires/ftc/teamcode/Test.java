@@ -29,6 +29,7 @@ public class Test extends LinearOpMode {
         Elevator.getMotorPos();
         waitForStart();
         while(opModeIsActive()) {
+            Pinch.openPinch();
             telemetry.addData("Elevator Pos", Elevator.getMotorPos());
             telemetry.update();
         }

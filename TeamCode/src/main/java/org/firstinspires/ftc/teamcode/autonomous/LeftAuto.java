@@ -26,19 +26,24 @@ public class LeftAuto extends LinearOpMode {
 
         Pinch.closePinch();
 
-        DriveTrain.moveXY(150, 50, 0, this);
-        sleep(100);
-        DriveTrain.moveXY(0, 2230, 0, this);
+        DriveTrain.moveXY(150, 50, 1, this);
         sleep(100);
 
-        DriveTrain.moveXY(650, 0, 0, this);
+        DriveTrain.moveXY(0, 2200, 1, this);
         sleep(100);
-        Elevator.setStateAut(2,this);
+
+        DriveTrain.moveXY(750, 0,  1,this);
+        sleep(100);
+
+        Elevator.setStateAut(2, this);
+        sleep(10);
+
+        Turret.setTurretState(1);
+        sleep(10);
+
+        Turret.setTurretState(0);
 
         Elevator.setStateAut(4, this);
-        sleep(100);
-
-        DriveTrain.moveXY(0, 20, 4, this);
         sleep(100);
 
         Elevator.setStateAut(7, this);
@@ -49,8 +54,7 @@ public class LeftAuto extends LinearOpMode {
 
         DriveTrain.moveXY(0, -150, 8, this);
 
-        Elevator.setStateAut(8, this);
-        sleep(100);
+        Elevator.setStateAut(8,this);
 
         Turret.setPosAuto(1);
         sleep(100);

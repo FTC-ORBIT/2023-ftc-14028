@@ -80,71 +80,81 @@ private static TurretState turretState = TurretState.DEFULT;
                 if (Elevator.getMotorPos() > 1000) {
                     turretState = TurretState.BACKWARD;
                 }
-                changeFloors(gamepad2);
+                changeFloors(gamepad1);
                 changeTurretState(gamepad1);
+                Pinch.closePinch();
+
                 break;
             case INTAKE:
                 turretState = TurretState.DEFULT;
                 pinchState = PinchState.OPEN;
                 if (Turret.getPosition() < 1000) {
                     elevatorState = ElevatorState.BASE;
+                    if(Elevator.getMotorPos() < 100){Pinch.openPinch();}
                 }
                 break;
             case DROP:
-//
-//                if (Elevator.getMotorPos() > 1180 && Elevator.getMotorPos() < 1219) {Elevator.setFloor(5);}
-//
-//                if (Elevator.getMotorPos() > 1080 && Elevator.getMotorPos() < 1130) {
-//                    Pinch.openPinch();
-//                }
-//
-//
-//                if (Elevator.getMotorPos() > 2030 && Elevator.getMotorPos() < 2070) {
-//                    Elevator.setFloor(6);
-//                }
-//        if (Elevator.getMotorPos() > 1930 && Elevator.getMotorPos() < 1980) {
-//            Pinch.openPinch();
-//        }
-//
-//        if (Elevator.getMotorPos() > 2900 && Elevator.getMotorPos() < 2970) {
-//            Elevator.setFloor(7);
-//        }
-//        if (Elevator.getMotorPos() > 2730 && Elevator.getMotorPos() < 2770) {
-//            Pinch.openPinch();
-//        } else Pinch.openPinch();
+//                if (Elevator.getMotorPos() > 2800 ) {Elevator.setFloor(7);}
+//                 if (Elevator.getMotorPos() >1900 &&  Elevator.getMotorPos() < 2100) {Elevator.setFloor(6);}
+//                else if (Elevator.getMotorPos() >1000 && Elevator.getMotorPos() < 1300) {Elevator.setFloor(5);}
+//                else {Elevator.setFloor(1);}
+//                if(Elevator.isIsFinishedElevating()){Pinch.openPinch();}
 
 
+              if (Elevator.getMotorPos() > 800) {
+                  changeFloors(gamepad1);
+
+                  if (Elevator.getMotorPos() - 200 > ElevatorConstants.level4Pos && Elevator.getMotorPos() > ElevatorConstants.level3Pos) {
+                     Pinch.openPinch();
+                  } else if (Elevator.getMotorPos() - 200 > ElevatorConstants.level3Pos && Elevator.getMotorPos() > ElevatorConstants.level2Pos) {
+                      Pinch.openPinch();
+                  } else if (Elevator.getMotorPos() - 200 > ElevatorConstants.level2Pos && Elevator.getMotorPos() > ElevatorConstants.level1Pos) {
+                      Pinch.openPinch();
+                  } else {
+                      Pinch.openPinch();
+                  }
+              } else {Pinch.openPinch();}
+
+                break;
 
             case TRAVEL2:
                 pinchState = PinchState.CLOSE;
                 elevatorState = ElevatorState.LEVEL3;
               if(Elevator.getMotorPos() > 1000)  {turretState = TurretState.BACKWARD;}
                 changeTurretState(gamepad1);
+                changeFloors(gamepad1);
+
+                Pinch.closePinch();
                 break;
             case TRAVEL3:
                 pinchState = PinchState.CLOSE;
                 turretState = TurretState.DEFULT;
                if(Turret.getPosition() < 1000){ elevatorState = ElevatorState.LEVEL1;}
                 changeTurretState(gamepad1);
+                changeFloors(gamepad1);
+                Pinch.closePinch();
                 break;
             case TRAVEL4:
                 pinchState = PinchState.CLOSE;
                 elevatorState = ElevatorState.LEVEL4;
                 if(Elevator.getMotorPos() > 1000)  {turretState = TurretState.BACKWARD;}
                 changeTurretState(gamepad1);
+                changeFloors(gamepad1);
+                Pinch.closePinch();
+                break;
         }
     }
 
     private static void changeFloors(Gamepad gamepad){
-        elevatorState = gamepad.a ? ElevatorState.LEVEL1 : elevatorState;
-        elevatorState = gamepad.b ? ElevatorState.LEVEL2 : elevatorState;
-        elevatorState = gamepad.x ? ElevatorState.LEVEL3 : elevatorState;
-        elevatorState = gamepad.y ? ElevatorState.LEVEL4 : elevatorState;
+//        elevatorState = gamepad.a ? ElevatorState.LEVEL1 : elevatorState;
+//        elevatorState = gamepad.b ? ElevatorState.LEVEL2 : elevatorState;
+//        elevatorState = gamepad.x ? ElevatorState.LEVEL3 : elevatorState;
+//        elevatorState = gamepad.y ? ElevatorState.LEVEL4 : elevatorState;
+        elevatorState = gamepad.left_bumper ? ElevatorState.LEVEL2 : elevatorState;
     }
     private static void changeTurretState(Gamepad gamepad){
-        turretState = gamepad.dpad_up ? TurretState.DEFULT : turretState;
         turretState = gamepad.dpad_left ? TurretState.SIDE : turretState;
-        turretState = gamepad.dpad_down ? TurretState.BACKWARD : turretState;
+        turretState = gamepad.dpad_up ? TurretState.DEFULT : turretState;
 
 
     }
