@@ -20,82 +20,76 @@ public class LeftAuto extends LinearOpMode {
         Elevator.init(this.hardwareMap);
         Pinch.init(this.hardwareMap);
         Turret.init(this.hardwareMap);
-        //AprilTagDetector.runAprilTagDetection(this);
+
+        Pinch.closePinch();
+
+        AprilTagDetector.runAprilTagDetection(this);
+        Pinch.closePinch();
 
         waitForStart();
 
         Pinch.closePinch();
 
-        DriveTrain.moveXY(150, 50, 1, this);
-        sleep(100);
+        DriveTrain.moveXY(150, 50, this);
 
-        DriveTrain.moveXY(0, 2200, 1, this);
-        sleep(100);
+        DriveTrain.moveXY(0, 2260, this);
 
-        DriveTrain.moveXY(750, 0,  1,this);
-        sleep(100);
-
-        Elevator.setStateAut(2, this);
-        sleep(10);
-
-        Turret.setTurretState(1);
-        sleep(10);
-
-        Turret.setTurretState(0);
+        DriveTrain.moveXY(690, -30, this);
 
         Elevator.setStateAut(4, this);
-        sleep(100);
 
+        DriveTrain.moveXY(0, 70, this);
+        sleep(10);
         Elevator.setStateAut(7, this);
-        sleep(100);
 
         Pinch.openPinch();
-        sleep(100);
 
-        DriveTrain.moveXY(0, -150, 8, this);
-
-        Elevator.setStateAut(8,this);
+        DriveTrain.moveXY(0, -90, this);
 
         Turret.setPosAuto(1);
-        sleep(100);
 
-        DriveTrain.moveXY(-1850, 0, 8, this);
-        sleep(100);
+
+        Elevator.setStateAut(8, this);
+
+
+        DriveTrain.moveXY(-1900, 150, this);
+        sleep(10);
 
         Pinch.closePinch();
-        sleep(100);
+sleep(100 );
 
-        Elevator.setStateAut(3, this);
+Elevator.setStateAut(3, this);
 
-        Turret.setTurretState(0);
-       Turret.breakMotor();
-        sleep(100);
+        Turret.setPosAuto(2);
+        Turret.breakMotor();
 
-        DriveTrain.moveXY(1850, 0, 4, this);
-        sleep(100);
+        Elevator.setFloor(4);
 
+        DriveTrain.moveXY(1870, -60, this);
 
-        Elevator.setStateAut(4,this);
-
-        Elevator.setStateAut(7, this);
+        Elevator.setStateAut(6, this);
 
         Pinch.openPinch();
 
-        DriveTrain.moveXY(0,-70,0,this);
+        DriveTrain.moveXY(0, 60, this);
 
-//        switch (AprilTagDetector.wantedParkingSpot()) {
-//            case RIGHT:
-//                DriveTrain.moveXY(600, 0, this);
-//                break;
-//
-//            case LEFT:
-//                DriveTrain.moveXY(-1750, 0, this);
-//                break;
-//
-//            case MIDDLE:
-//                DriveTrain.moveXY(-400, 0, this);
-//                break;
-//        }
+        Turret.setPosAuto(0);
+
+        Elevator.setStateAut(0,this);
+
+        switch (AprilTagDetector.wantedParkingSpot()) {
+            case RIGHT:
+                DriveTrain.moveXY(600, -150, this);
+                break;
+
+            case LEFT:
+                DriveTrain.moveXY(-1850, -200, this);
+                break;
+
+            case MIDDLE:
+                DriveTrain.moveXY(-600, -150, this);
+                break;
+        }
 
     }
 }

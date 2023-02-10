@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.PID;
+import org.opencv.features2d.BRISK;
 
 public class Elevator {
 
@@ -35,6 +36,21 @@ public class Elevator {
                 break;
             case LEVEL4:
                 setFloor(4);
+                break;
+            case SIDE1:
+                setFloor(8);
+                break;
+            case SIDE2:
+                setFloor(9);
+                break;
+            case SIDE3:
+                setFloor(10);
+                break;
+            case SIDE4:
+                setFloor(11);
+                break;
+            case SIDE5:
+                setFloor(12);
                 break;
         }
 
@@ -75,6 +91,19 @@ public class Elevator {
             case 8:
                 wanted = ElevatorConstants.sidePickupPos;
                 break;
+            case 9:
+                wanted = ElevatorConstants.side2PickupPos;
+                break;
+            case 10:
+                wanted = ElevatorConstants.side3PickupPos;
+                break;
+            case 11:
+                wanted = ElevatorConstants.side4PickupPos;
+                break;
+            case 12:
+                wanted =ElevatorConstants.side5PickupPos;
+                break;
+
             default:
                 wanted = ElevatorConstants.basePos;
                 break;
@@ -121,12 +150,12 @@ public class Elevator {
                 wanted = ElevatorConstants.basePos;
                 break;
         }
-        if (floor == 0 || floor == 5 || floor == 7) {
+        if (floor == 0 || floor == 5 || floor == 6  || floor == 7 || floor == 8) {
             while (Math.abs(motor.getCurrentPosition()) > Math.abs(wanted) + 10 && opMode.opModeIsActive()) {
                 setFloor(floor);
             }
         } else {
-            while (!(Math.abs(motor.getCurrentPosition()) > Math.abs(wanted) - 100) && opMode.opModeIsActive()) {
+            while (!(Math.abs(motor.getCurrentPosition()) > Math.abs(wanted) - 110) && opMode.opModeIsActive()) {
                 setFloor(floor);
             }
         }

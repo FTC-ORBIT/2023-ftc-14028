@@ -72,15 +72,14 @@ private static TurretState turretState = TurretState.DEFULT;
             OrbitGyro.resetGyro();
         }
 
-
         switch (state) {
             case TRAVEL1:
                 pinchState = PinchState.CLOSE;
                 elevatorState = ElevatorState.LEVEL2;
                 if (Elevator.getMotorPos() > 1000) {
                     turretState = TurretState.BACKWARD;
+
                 }
-                changeFloors(gamepad1);
                 changeTurretState(gamepad1);
                 Pinch.closePinch();
 
@@ -91,15 +90,11 @@ private static TurretState turretState = TurretState.DEFULT;
                 if (Turret.getPosition() < 1000) {
                     elevatorState = ElevatorState.BASE;
                     if(Elevator.getMotorPos() < 100){Pinch.openPinch();}
+                    changeFloors(gamepad2);
+
                 }
                 break;
             case DROP:
-//                if (Elevator.getMotorPos() > 2800 ) {Elevator.setFloor(7);}
-//                 if (Elevator.getMotorPos() >1900 &&  Elevator.getMotorPos() < 2100) {Elevator.setFloor(6);}
-//                else if (Elevator.getMotorPos() >1000 && Elevator.getMotorPos() < 1300) {Elevator.setFloor(5);}
-//                else {Elevator.setFloor(1);}
-//                if(Elevator.isIsFinishedElevating()){Pinch.openPinch();}
-
 
               if (Elevator.getMotorPos() > 800) {
                   changeFloors(gamepad1);
@@ -122,7 +117,6 @@ private static TurretState turretState = TurretState.DEFULT;
                 elevatorState = ElevatorState.LEVEL3;
               if(Elevator.getMotorPos() > 1000)  {turretState = TurretState.BACKWARD;}
                 changeTurretState(gamepad1);
-                changeFloors(gamepad1);
 
                 Pinch.closePinch();
                 break;
@@ -131,7 +125,7 @@ private static TurretState turretState = TurretState.DEFULT;
                 turretState = TurretState.DEFULT;
                if(Turret.getPosition() < 1000){ elevatorState = ElevatorState.LEVEL1;}
                 changeTurretState(gamepad1);
-                changeFloors(gamepad1);
+               changeFloors(gamepad2);
                 Pinch.closePinch();
                 break;
             case TRAVEL4:
@@ -139,17 +133,16 @@ private static TurretState turretState = TurretState.DEFULT;
                 elevatorState = ElevatorState.LEVEL4;
                 if(Elevator.getMotorPos() > 1000)  {turretState = TurretState.BACKWARD;}
                 changeTurretState(gamepad1);
-                changeFloors(gamepad1);
                 Pinch.closePinch();
                 break;
         }
     }
 
     private static void changeFloors(Gamepad gamepad){
-//        elevatorState = gamepad.a ? ElevatorState.LEVEL1 : elevatorState;
-//        elevatorState = gamepad.b ? ElevatorState.LEVEL2 : elevatorState;
-//        elevatorState = gamepad.x ? ElevatorState.LEVEL3 : elevatorState;
-//        elevatorState = gamepad.y ? ElevatorState.LEVEL4 : elevatorState;
+        elevatorState = gamepad.a ? ElevatorState.SIDE2 : elevatorState;
+        elevatorState = gamepad.b ? ElevatorState.SIDE3 : elevatorState;
+        elevatorState = gamepad.x ? ElevatorState.SIDE4 : elevatorState;
+        elevatorState = gamepad.y ? ElevatorState.SIDE5 : elevatorState;
         elevatorState = gamepad.left_bumper ? ElevatorState.LEVEL2 : elevatorState;
     }
     private static void changeTurretState(Gamepad gamepad){

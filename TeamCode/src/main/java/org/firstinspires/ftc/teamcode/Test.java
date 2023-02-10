@@ -28,12 +28,7 @@ public class Test extends LinearOpMode {
         OrbitGyro.resetGyro();
         Elevator.getMotorPos();
         waitForStart();
-        while(opModeIsActive()) {
-            Pinch.openPinch();
-            telemetry.addData("Elevator Pos", Elevator.getMotorPos());
-            telemetry.update();
-        }
-//    DriveTrain.moveXY(0,1000,3,this);
-//    sleep(10000);
+        Elevator.setStateAut(2,this);
+        sleep(1000);
     }
 }
